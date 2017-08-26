@@ -8,6 +8,7 @@ Load Gulp modules.
     uglify = require 'gulp-uglify' # minify javascript
     sourcemaps = require 'gulp-sourcemaps' # create source maps
     pump = require 'pump' # good error handling of gulp pipes
+    shell = require 'gulp-shell' # run external commands
 
 Create default task to compile CoffeeScript source into JavaScript.
 
@@ -19,3 +20,12 @@ Create default task to compile CoffeeScript source into JavaScript.
         sourcemaps.write '.'
         gulp.dest '.'
     ]
+
+Create "tests" task to run unit tests.
+
+    gulp.task 'test', shell.task [
+        'node'
+        './node_modules/jasmine-node/lib/jasmine-node/cli.js'
+        '--verbose --coffee'
+        'openmath-spec.litcoffee'
+    ].join ' '
