@@ -11,5 +11,8 @@
     "repository": {
         "type": "git",
         "url": "git://github.com/lurchmath/openmath-js.git"
+    },
+    "devDependencies": {
+        "gulp": "^3.9.1"
     }
 }
