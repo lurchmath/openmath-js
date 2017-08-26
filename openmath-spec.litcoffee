@@ -5,7 +5,7 @@ Here we import the module we're about to test, plus a utilities module for
 comparing JSON structures.  (That module is tested [in a separate
 file](utils-spec.litcoffee).)
 
-    { OM, OMNode } = require '../src/openmath-duo'
+    { OM, OMNode } = require './openmath'
 
 ## `OMNode` class
 
@@ -271,7 +271,7 @@ numbers.
             expect( OMNode.checkJSON { t : 'i', v : 'seven' } ) \
                 .toMatch /Not an integer: seven/
             expect( OMNode.checkJSON { t : 'i', v : new Uint8Array } ) \
-                .toMatch /Not an integer: \[object Uint8Array\]/
+                .toMatch /Not an integer: / # empty array gives empty string
 
 Floats can't have keys other than t and v, and their values must be numbers
 passing `isFinite` and failing `isNaN`.
@@ -553,9 +553,12 @@ That is, if the input to `decode` is not even valid JSON, then the JSON
 parsing error should be returned as a string
 
         it 'should return errors from invalid JSON', ->
-            expect( OMNode.decode 'something' ).toEqual 'Unexpected token s'
-            expect( OMNode.decode '{a:"b"}' ).toEqual 'Unexpected token a'
-            expect( OMNode.decode '{"a":7 7}' ).toEqual 'Unexpected number'
+            expect( OMNode.decode 'something' ).toEqual \
+                'Unexpected token s in JSON at position 0'
+            expect( OMNode.decode '{a:"b"}' ).toEqual \
+                'Unexpected token a in JSON at position 1'
+            expect( OMNode.decode '{"a":7 7}' ).toEqual \
+                'Unexpected number in JSON at position 7'
 
 ### should return errors from invalid OpenMath JSON
 

@@ -1,0 +1,15 @@
+{
+    "name": "openmath-js",
+    "version": "0.1.0",
+    "description": "Implementation of (most of) the OpenMath Standard in JavaScript",
+    "author": "Nathan Carter <ncarter@bentley.edu> (http://nathancarter.github.io",
+    "license": "LGPLv3",
+    "dependencies": {
+        "coffee-script": "1.8.0",
+        "jasmine-node": "1.14.5"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git://github.com/lurchmath/openmath-js.git"
+    }
+}
