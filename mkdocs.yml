@@ -1,0 +1,6 @@
+site_name: OpenMath.js Documentation
+pages:
+    - Home: index.md
+    - Source: source-code.md
+    - Work: work-done.md
+    - Reference: api-reference.md

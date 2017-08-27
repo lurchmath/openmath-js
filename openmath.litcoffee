@@ -41,7 +41,7 @@ The following line ensures that this file works in Node.js, for testing.
 ### Class ("static") methods
 
 The following class method checks to see if an object is of any one of the
-formats specified above; if so, it returns true, and if not, it returns an
+formats specified above; if so, it returns null, and if not, it returns an
 error describing why not.  It is recursive, verifying that children are also
 of the correct form.
 
