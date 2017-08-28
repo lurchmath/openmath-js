@@ -3,7 +3,7 @@
 
 ## Reading the source
 
-The code in the repository resides in [one file](../openmath.litcoffee),
+The code in the repository resides in [one file](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee),
 written in [Literate CoffeeScript](http://coffeescript.org/#literate).
 
 ## Changing the source
