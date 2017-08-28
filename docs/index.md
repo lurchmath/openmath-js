@@ -1,6 +1,14 @@
 
 # OpenMath.js Documentation
 
+## Get started now
+
+Import this into your site like so:
+
+```html
+<script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'></script>
+```
+
 ## Background
 
 [OpenMath](http://www.openmath.org) is a data storage standard for

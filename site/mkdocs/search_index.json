@@ -2,13 +2,18 @@
     "docs": [
         {
             "location": "/", 
-            "text": "OpenMath.js Documentation\n\n\nBackground\n\n\nOpenMath\n is a data storage standard for\nmeaningful mathematics.  Rather than encoding the appearance of the\nmathematics (like \nLaTeX\n does, for\ninstance), it encodes the meaning of the mathematics (similar to \nContent\nMathML\n).  You can\nread its latest standard\n\nhere\n.\n\n\nMore Information\n\n\nThe following additional information is available in this documentation.\n\n\n\n\nWork Done\n - what the code in this repository can do, and\n   what it cannot do\n\n\nSource Code\n - see the source and/or import it into your\n   own project\n\n\nAPI Reference\n - how to use the various functions and\n   objects provided", 
+            "text": "OpenMath.js Documentation\n\n\nGet started now\n\n\nImport this into your site like so:\n\n\nscript src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'\n/script\n\n\n\n\n\nBackground\n\n\nOpenMath\n is a data storage standard for\nmeaningful mathematics.  Rather than encoding the appearance of the\nmathematics (like \nLaTeX\n does, for\ninstance), it encodes the meaning of the mathematics (similar to \nContent\nMathML\n).  You can\nread its latest standard\n\nhere\n.\n\n\nMore Information\n\n\nThe following additional information is available in this documentation.\n\n\n\n\nWork Done\n - what the code in this repository can do, and\n   what it cannot do\n\n\nSource Code\n - see the source and/or import it into your\n   own project\n\n\nAPI Reference\n - how to use the various functions and\n   objects provided", 
             "title": "Home"
         }, 
         {
             "location": "/#openmathjs-documentation", 
             "text": "", 
             "title": "OpenMath.js Documentation"
+        }, 
+        {
+            "location": "/#get-started-now", 
+            "text": "Import this into your site like so:  script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js' /script", 
+            "title": "Get started now"
         }, 
         {
             "location": "/#background", 
@@ -22,7 +27,7 @@
         }, 
         {
             "location": "/source-code/", 
-            "text": "Source Code\n\n\nReading the source\n\n\nThe code in the repository resides in \none file\n,\nwritten in \nLiterate CoffeeScript\n.\n\n\nChanging the source\n\n\nIf you don't like that language, you can always compile it directly to\nJavaScript with the following command.\n\n\ncoffee --compile openmath.litcoffee\n\n\n\n\nThis assumes that you've \ninstalled\nCoffeeScript\n and have the \nsource\nfile\n\naccessible.\n\n\nImporting the source\n\n\nTo import the source into your project, you can include it directly from\nGitHub (using \nRawGit\n) at \nthis\nURL\n.\nThere is a source map file in the same folder; see\n\nhere\n.", 
+            "text": "Source Code\n\n\nReading the source\n\n\nThe code in \nthe repository\n\nresides in \none\nfile\n,\nwritten in \nLiterate CoffeeScript\n.\n\n\nChanging the source\n\n\nIf you don't like that language, you can always compile it directly to\nJavaScript with the following command.\n\n\ncoffee --compile openmath.litcoffee\n\n\n\n\nThis assumes that you've \ninstalled\nCoffeeScript\n and have the \nsource\nfile\n\naccessible.\n\n\nImporting the source\n\n\nTo import the source into your project, you can include it directly from\nGitHub (using \nRawGit\n) at \nthis\nURL\n.\nThere is a source map file in the same folder; see\n\nhere\n.", 
             "title": "Source"
         }, 
         {
@@ -32,7 +37,7 @@
         }, 
         {
             "location": "/source-code/#reading-the-source", 
-            "text": "The code in the repository resides in  one file ,\nwritten in  Literate CoffeeScript .", 
+            "text": "The code in  the repository \nresides in  one\nfile ,\nwritten in  Literate CoffeeScript .", 
             "title": "Reading the source"
         }, 
         {
