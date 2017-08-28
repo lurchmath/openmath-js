@@ -48,12 +48,16 @@ that create `OM` instances, as follows.
 
 Example use:
 
-```js
-var plus = OM.symbol( 'plus', 'arith1' );
-var arg1 = OM.variable( 'x' );
-var arg2 = OM.integer( 5 );
-var expr = OM.application( plus, arg1, arg2 ); // means x+5
-```
+<script src="https://embed.runkit.com" data-element-id="example1"></script>
+<div id="example1">
+// in node.js, we import the module:
+OM = require( 'openmath-js' ).OM;
+// in the browser, you would not need that step
+plus = OM.symbol( 'plus', 'arith1' );
+arg1 = OM.variable( 'x' );
+arg2 = OM.integer( 5 );
+OM.application( plus, arg1, arg2 ).toXML(); // gives XML encoding for x+5
+</div>
 
 Because the above method can easily become annoyingly lengthy, we also
 provide a shorthand for writing OpenMath expressions as strings and having
@@ -70,9 +74,11 @@ instances from that encoding with the following function.
 
 Example usage:
 
-```js
-var sameExprAsAbove = OM.simpleDecode( 'plus.arith1(x,5)' );
-```
+<script src="https://embed.runkit.com" data-element-id="example2"></script>
+<div id="example2">
+OM = require( 'openmath-js' ).OM;
+OM.simpleDecode( 'plus.arith1(x,5)' ).toXML();
+</div>
 
 Each of the functions in this section have nicknames.  For each factory
 function given above, it has a three-letter nickname to help you write
@@ -81,18 +87,20 @@ the `OM` namespace, and include `int`, `flo`, `str`, `byt`, `sym`, `var`,
 `app`, `att`, `bin`, and `err`.  Thus, for instance, you can write the
 following code to build a valid OpenMath expression.
 
-```js
-var sameExprAgain = OM.app(
-  OM.sym( 'plus', 'arith1' ), OM.var( 'x' ), OM.int( 5 )    
-);
-```
+<script src="https://embed.runkit.com" data-element-id="example3"></script>
+<div id="example3">
+OM = require( 'openmath-js' ).OM;
+OM.app( OM.sym( 'plus', 'arith1' ), OM.var( 'x' ), OM.int( 5 ) ).toXML();
+</div>
 
 Finally, the `simpleDecode` function also has the nickname `simple`, so the
 most compact form is the following.
 
-```js
-var oneLastTime = OM.simple( 'plus.arith1(x,5)' );
-```
+<script src="https://embed.runkit.com" data-element-id="example4"></script>
+<div id="example4">
+OM = require( 'openmath-js' ).OM;
+OM.simple( 'plus.arith1(x,5)' ).toXML();
+</div>
 
 The `OM` objects are just wrappers around JSON tree structures that provide
 methods for interacting with those tree structures.  You can get access to
@@ -192,18 +200,20 @@ thus check equality in two ways.
 
 Examples:
 
-```js
-var A = OM.application( OM.variable( 'f', OM.integer( 3 ) ) ); // f(3)
-var B = A.copy(); // deep copy
-var C = A.children[0]; // builds a new OM instance for the f
-var D = A.children[0]; // does the same thing again
+<script src="https://embed.runkit.com" data-element-id="example5"></script>
+<div id="example5">
+OM = require( 'openmath-js' ).OM;
+A = OM.application( OM.variable( 'f', OM.integer( 3 ) ) ); // f(3)
+B = A.copy(); // deep copy
+C = A.children[0]; // builds a new OM instance for the f
+D = A.children[0]; // does the same thing again
 console.log( A.equals( B ) ); // true
 console.log( A.sameObjectAs( B ) ); // false
 console.log( A == B ); // false
 console.log( C.equals( D ) ); // true
 console.log( C.sameObjectAs( D ) ); // true
 console.log( C == D ); // false
-```
+</div>
 
 You can also modify tree structures as follows.
 
@@ -239,14 +249,18 @@ source code documentation here](https://github.com/lurchmath/openmath-js/blob/ma
 
 Example:
 
-```js
-var A = OM.application( OM.variable( 'print' ),
+<script src="https://embed.runkit.com" data-element-id="example6"></script>
+<div id="example6">
+OM = require( 'openmath-js' ).OM;
+A = OM.application( OM.variable( 'print' ),
                         OM.string( 'Hello' ), OM.string( 'World' ) );
-var str1 = A.children[1]; // zero-based, so this is "Hello"
-var index = str1.findInParent(); // "c1"
-var child = A.findChild( index ); // first argument of the print function
+str1 = A.children[1]; // zero-based
+console.log( str1.value ); // "Hello"
+index = str1.findInParent();
+console.log( index ); // "c1"
+child = A.findChild( index );
 console.log( child.sameObjectAs( str1 ) ); // true
-```
+</div>
 
  * `instance.address(inThisAncestor)` is a generalization of `indexInParent`
    to arbitrary depth.  It returns an array of indices that one would need
@@ -260,13 +274,15 @@ console.log( child.sameObjectAs( str1 ) ); // true
 
 Examples:
 
-```js
-var deepTree = OM.simple( 'arith1.plus(f(g(x,y)),h(k(z)))' );
-var descendant = deepTree.index( [ 'c1', 'c1', 'c2' ] );
-console.log( descendant.value ); // "y"
+<script src="https://embed.runkit.com" data-element-id="example7"></script>
+<div id="example7">
+OM = require( 'openmath-js' ).OM;
+deepTree = OM.simple( 'arith1.plus(f(g(x,y)),h(k(z)))' );
+descendant = deepTree.index( [ 'c1', 'c1', 'c2' ] );
+console.log( descendant.name ); // "y"
 console.log( descendant.address( deepTree ) ); // c1,c1,c2
 console.log( descendant.address( deepTree.children[1] ) ); // c1,c2
-```
+</div>
 
 You can filter children or descendants by predicates.
 
@@ -326,10 +342,12 @@ of the function is strings of the form "id_[many decimal digits here]".
 
 Example:
 
-```js
-console.log( OM.encodeAsIdentifier( '#$&@' ) ); // "id_0023002400260040"
-console.log( OM.decodeIdentifier( "id_0023002400260040" ) ); // "#$&@"
-```
+<script src="https://embed.runkit.com" data-element-id="example8"></script>
+<div id="example8">
+OM = require( 'openmath-js' ).OM;
+console.log( OM.encodeAsIdentifier( '#$&@' ) ); // id_0023002400260040
+console.log( OM.decodeIdentifier( "id_0023002400260040" ) ); // #$&@
+</div>
 
 Some applications find it useful to be able to evaluate simple numerical
 OpenMath expressions.
@@ -343,11 +361,10 @@ OpenMath expressions.
 
 Example:
 
-```js
-OM.simple( 'trasnc1.cos(0)' ).evaluate();
-// yields {value: 1, message: undefined}
-OM.simple( 'f(x)' ).evaluate();
-// yields {value: undefined, message: "Could not evaluate f(x)"}
-OM.simple( 'e' ).evaluate();
-// yields {value: 2.718281828459045, message: "The actual value of e has been rounded."}
-```
+<script src="https://embed.runkit.com" data-element-id="example9"></script>
+<div id="example9">
+OM = require( 'openmath-js' ).OM;
+console.log( OM.simple( 'transc1.cos(0)' ).evaluate() ); // 1
+console.log( OM.simple( 'f(x)' ).evaluate() ); // error message
+console.log( OM.simple( 'e' ).evaluate() ); // 2.71828... w/rounding message
+</div>
