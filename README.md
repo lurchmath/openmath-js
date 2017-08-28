@@ -13,4 +13,4 @@ Implementation of (most of) [the OpenMath Standard](https://www.openmath.org/sta
 
 ## Documentation
 
-[See our documentation site here.](https://lurchmath.github.io/openmath-js/)
+[See our documentation site here.](site/)
