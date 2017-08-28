@@ -48,11 +48,7 @@ that create `OM` instances, as follows.
 
 Example use:
 
-<script src="https://embed.runkit.com" data-element-id="example1"></script>
-<div id="example1">
-// in node.js, we import the module:
-OM = require( 'openmath-js' ).OM;
-// in the browser, you would not need that step
+<div class="runnable-example">
 plus = OM.symbol( 'plus', 'arith1' );
 arg1 = OM.variable( 'x' );
 arg2 = OM.integer( 5 );
@@ -74,9 +70,7 @@ instances from that encoding with the following function.
 
 Example usage:
 
-<script src="https://embed.runkit.com" data-element-id="example2"></script>
-<div id="example2">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 OM.simpleDecode( 'plus.arith1(x,5)' ).toXML();
 </div>
 
@@ -87,18 +81,14 @@ the `OM` namespace, and include `int`, `flo`, `str`, `byt`, `sym`, `var`,
 `app`, `att`, `bin`, and `err`.  Thus, for instance, you can write the
 following code to build a valid OpenMath expression.
 
-<script src="https://embed.runkit.com" data-element-id="example3"></script>
-<div id="example3">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 OM.app( OM.sym( 'plus', 'arith1' ), OM.var( 'x' ), OM.int( 5 ) ).toXML();
 </div>
 
 Finally, the `simpleDecode` function also has the nickname `simple`, so the
 most compact form is the following.
 
-<script src="https://embed.runkit.com" data-element-id="example4"></script>
-<div id="example4">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 OM.simple( 'plus.arith1(x,5)' ).toXML();
 </div>
 
@@ -200,9 +190,7 @@ thus check equality in two ways.
 
 Examples:
 
-<script src="https://embed.runkit.com" data-element-id="example5"></script>
-<div id="example5">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 A = OM.application( OM.variable( 'f', OM.integer( 3 ) ) ); // f(3)
 B = A.copy(); // deep copy
 C = A.children[0]; // builds a new OM instance for the f
@@ -249,9 +237,7 @@ source code documentation here](https://github.com/lurchmath/openmath-js/blob/ma
 
 Example:
 
-<script src="https://embed.runkit.com" data-element-id="example6"></script>
-<div id="example6">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 A = OM.application( OM.variable( 'print' ),
                         OM.string( 'Hello' ), OM.string( 'World' ) );
 str1 = A.children[1]; // zero-based
@@ -274,9 +260,7 @@ console.log( child.sameObjectAs( str1 ) ); // true
 
 Examples:
 
-<script src="https://embed.runkit.com" data-element-id="example7"></script>
-<div id="example7">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 deepTree = OM.simple( 'arith1.plus(f(g(x,y)),h(k(z)))' );
 descendant = deepTree.index( [ 'c1', 'c1', 'c2' ] );
 console.log( descendant.name ); // "y"
@@ -342,9 +326,7 @@ of the function is strings of the form "id_[many decimal digits here]".
 
 Example:
 
-<script src="https://embed.runkit.com" data-element-id="example8"></script>
-<div id="example8">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 console.log( OM.encodeAsIdentifier( '#$&@' ) ); // id_0023002400260040
 console.log( OM.decodeIdentifier( "id_0023002400260040" ) ); // #$&@
 </div>
@@ -361,10 +343,22 @@ OpenMath expressions.
 
 Example:
 
-<script src="https://embed.runkit.com" data-element-id="example9"></script>
-<div id="example9">
-OM = require( 'openmath-js' ).OM;
+<div class="runnable-example">
 console.log( OM.simple( 'transc1.cos(0)' ).evaluate() ); // 1
 console.log( OM.simple( 'f(x)' ).evaluate() ); // error message
 console.log( OM.simple( 'e' ).evaluate() ); // 2.71828... w/rounding message
 </div>
+
+<script src="https://embed.runkit.com"></script>
+<script>
+var elements = document.getElementsByClassName( 'runnable-example' );
+for ( var i = 0 ; i < elements.length ; i++ ) {
+    var source = elements[i].textContent;
+    elements[i].textContent = '';
+    var notebook = RunKit.createNotebook( {
+        element: elements[i],
+        source: source,
+        preamble: 'OM = require( "openmath-js" ).OM;'
+    } );
+}
+</script>
