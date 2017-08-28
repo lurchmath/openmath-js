@@ -34,4 +34,4 @@ Create "docs" task to build the documentation using
 [MkDocs](http://www.mkdocs.org).  This requires that you have `mkdocs`
 installed on your system.
 
-    gulp.task 'docs', shell.task [ 'mkdocs', 'build' ]
+    gulp.task 'docs', shell.task 'mkdocs build'
