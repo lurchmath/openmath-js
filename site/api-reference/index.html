@@ -1,0 +1,497 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        
+        
+        
+        <link rel="shortcut icon" href="../img/favicon.ico">
+
+	<title>Reference - OpenMath.js Documentation</title>
+
+        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
+        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/base.css" rel="stylesheet">
+        <link rel="stylesheet" href="../css/highlight.css">
+
+        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+        <![endif]-->
+
+        
+    </head>
+
+    <body>
+
+        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
+    <div class="container">
+
+        <!-- Collapsed navigation -->
+        <div class="navbar-header">
+            
+            <!-- Expander button -->
+            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            
+
+            <!-- Main title -->
+            <a class="navbar-brand" href="..">OpenMath.js Documentation</a>
+        </div>
+
+        <!-- Expanded navigation -->
+        <div class="navbar-collapse collapse">
+            
+                <!-- Main navigation -->
+                <ul class="nav navbar-nav">
+                
+                
+                    <li >
+                        <a href="..">Home</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../source-code/">Source</a>
+                    </li>
+                
+                
+                
+                    <li >
+                        <a href="../work-done/">Work</a>
+                    </li>
+                
+                
+                
+                    <li class="active">
+                        <a href="./">Reference</a>
+                    </li>
+                
+                
+                </ul>
+            
+
+            <ul class="nav navbar-nav navbar-right">
+                <li>
+                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
+                        <i class="fa fa-search"></i> Search
+                    </a>
+                </li>
+                
+                    <li >
+                        <a rel="next" href="../work-done/">
+                            <i class="fa fa-arrow-left"></i> Previous
+                        </a>
+                    </li>
+                    <li class="disabled">
+                        <a rel="prev" >
+                            Next <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </li>
+                
+                
+            </ul>
+        </div>
+    </div>
+</div>
+
+        <div class="container">
+            
+                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
+    <ul class="nav bs-sidenav">
+    
+        <li class="main active"><a href="#api-reference">API Reference</a></li>
+        
+            <li><a href="#creating-openmath-objects">Creating OpenMath objects</a></li>
+        
+            <li><a href="#writingsaving-openmath-objects">Writing/saving OpenMath objects</a></li>
+        
+            <li><a href="#properties-of-openmath-objects">Properties of OpenMath Objects</a></li>
+        
+            <li><a href="#tree-related-functions">Tree-Related Functions</a></li>
+        
+            <li><a href="#searching-openmath-trees">Searching OpenMath Trees</a></li>
+        
+            <li><a href="#free-and-bound-variables">Free and Bound Variables</a></li>
+        
+            <li><a href="#miscellany">Miscellany</a></li>
+        
+    
+    </ul>
+</div></div>
+                <div class="col-md-9" role="main">
+
+<h1 id="api-reference">API Reference</h1>
+<h2 id="creating-openmath-objects">Creating OpenMath objects</h2>
+<p>The prototype for OpenMath data structures (that is, expression trees) is
+named <code>OMNode</code> in the global namespace (the browser <code>window</code>) and is also
+named <code>OM</code> for convenience; they are the same object.  It is defined as a
+CoffeeScript class, which translates to a JavaScript prototype.</p>
+<p>Rather than use its constructor, there are a number of factory functions
+that create <code>OM</code> instances, as follows.</p>
+<ul>
+<li><code>OM.integer(i)</code> creates a new OpenMath integer object from the given
+   JavaScript integer <code>i</code>.  If you want to store a big integer, pass it as
+   a string instead of an integer, as in <code>OM.integer('583257320489234290')</code>.</li>
+<li><code>OM.float(f)</code> creates a new OpenMath float object from the given
+   JavaScript number <code>f</code> which cannot be infinite or NaN</li>
+<li><code>OM.string(s)</code> creates a new OpenMath string object from the given
+   JavaScript string <code>s</code></li>
+<li><code>OM.bytearray(a)</code> creates a new OpenMath bytearray object from the given
+   JavaScript Uint8Array <code>a</code></li>
+<li><code>OM.symbol(name,cd[,uri])</code> creates a new OpenMath symbol with the given
+   name (<code>name</code>) and content dictionary (<code>cd</code>), which are both strings.  An
+   optional base <code>uri</code> can also be passed.</li>
+<li><code>OM.variable(x)</code> creates a new OpenMath variable whose name is given in
+   the string <code>x</code></li>
+<li><code>OM.application(c1,c2,...,cn)</code> creates a new OpenMath application whose
+   children are the <code>OM</code> instances <code>c1</code> through <code>cn</code>.  This represents an
+   application of <code>c1</code> as a function to the arguments <code>c2</code> through <code>cn</code>,
+   where n may be 1.  Note that this makes copies of all the children given
+   to it, rather than removing them from their current contexts.  This
+   allows the function to be called on the same argument several times, for
+   instance.</li>
+<li><code>OM.attribution(x,k1,v1,k2,v2,...,kn,vn)</code> creates a copy of the <code>OM</code>
+   instance <code>x</code> with new attribute pairs added.  Each (<code>ki</code>,<code>vi</code>) pair is a
+   key-value pair, in which <code>ki</code> must be an OpenMath symbol (an <code>OM</code>
+   instance) and each <code>vi</code> must be any <code>OM</code> instance.</li>
+<li><code>OM.binding(h,v1,v2,...,vn,b)</code> creates a new OpenMath binding in which
+   the head symbol <code>h</code> (which must be an OpenMath symbol node, an <code>OM</code>
+   instance) binds the variables <code>v1</code> through <code>vn</code> (which must be OpenMath
+   variable nodes, also <code>OM</code> instances) in the body <code>b</code> (which can be any
+   <code>OM</code> instance).</li>
+<li><code>OM.error(s,c1,c2,...,cn)</code> creates a new OpenMath error object in which
+   <code>s</code> is the head symbol (an <code>OM</code> instance representing an OpenMath symbol)
+   and there are zero or more other children <code>c1</code> through <code>cn</code> that can be
+   any <code>OM</code> instances</li>
+</ul>
+<p>Example use:</p>
+<pre><code class="js">var plus = OM.symbol( 'plus', 'arith1' );
+var arg1 = OM.variable( 'x' );
+var arg2 = OM.integer( 5 );
+var expr = OM.application( plus, arg1, arg2 ); // means x+5
+</code></pre>
+
+<p>Because the above method can easily become annoyingly lengthy, we also
+provide a shorthand for writing OpenMath expressions as strings and having
+them parsed in a convenient way.  Full details are covered in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#simple-encoding-and-decoding">the source
+code documentation
+here</a>.
+It is called "simple encoding and decoding," and you can create new <code>OM</code>
+instances from that encoding with the following function.</p>
+<ul>
+<li><code>OM.simpleDecode(string)</code> creates a new <code>OM</code> instance decoded from the
+   given string.  If your input is invalid (not a string, or a string not
+   containing a valid simple encoding) then the return value will be a
+   string error message, rather than an <code>OM</code> instance.</li>
+</ul>
+<p>Example usage:</p>
+<pre><code class="js">var sameExprAsAbove = OM.simpleDecode( 'plus.arith1(x,5)' );
+</code></pre>
+
+<p>Each of the functions in this section have nicknames.  For each factory
+function given above, it has a three-letter nickname to help you write
+shorter code that builds OpenMath tree structures.  The nicknames are all in
+the <code>OM</code> namespace, and include <code>int</code>, <code>flo</code>, <code>str</code>, <code>byt</code>, <code>sym</code>, <code>var</code>,
+<code>app</code>, <code>att</code>, <code>bin</code>, and <code>err</code>.  Thus, for instance, you can write the
+following code to build a valid OpenMath expression.</p>
+<pre><code class="js">var sameExprAgain = OM.app(
+  OM.sym( 'plus', 'arith1' ), OM.var( 'x' ), OM.int( 5 )    
+);
+</code></pre>
+
+<p>Finally, the <code>simpleDecode</code> function also has the nickname <code>simple</code>, so the
+most compact form is the following.</p>
+<pre><code class="js">var oneLastTime = OM.simple( 'plus.arith1(x,5)' );
+</code></pre>
+
+<p>The <code>OM</code> objects are just wrappers around JSON tree structures that provide
+methods for interacting with those tree structures.  You can get access to
+the tree structur itself with <code>myInstance.tree</code>.  It is not quite JSON,
+because it has circular references, as children nodes point to their parent
+nodes, but it is close to JSON.</p>
+<p>The specification for how OpenMath expressions are stored as JSON trees is
+given <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module">at the top of the source code documentation</a>, should you need it.  The following methods are
+available for working with such structures, but these are rarely used by the
+client, and are mostly for internal purposes.</p>
+<ul>
+<li><code>OM.checkJSON(jsonObject)</code> returns <code>null</code> if the object is valid JSON
+   that represents and OpenMath data structure, and thus could be wrapped in
+   an <code>OM</code> instance, or a string error message if it is not</li>
+<li><code>OM.decode(jsonObject)</code> creates an <code>OM</code> instance by wrapping the given
+   object in an <code>OM</code> object, if possible, or throws an error if
+   <code>OM.checkJSON</code> fails on the given input</li>
+<li><code>OM.decode(string)</code> parses the string as JSON and then calls the previous
+   function.</li>
+<li><code>OM(tree)</code> creates a new <code>OM</code> instance wrapping the given JSON tree; this
+   is the same as <code>OM.decode</code>, but more compact.  Note that you can thus get
+   two instances that refer to the same internal data via
+   <code>OM(otherInstance.tree)</code>.</li>
+</ul>
+<h2 id="writingsaving-openmath-objects">Writing/saving OpenMath objects</h2>
+<ul>
+<li><code>instance.encode()</code> is the inverse of <code>OM.decode()</code>, and yields a JSON
+   string useful for serializing instances in a compact way</li>
+<li><code>instance.simpleEncode()</code> is the inverse of <code>OM.simpleDecode()</code>, and
+   converts instances into the simple encoding mentioned above.  Note that
+   it does not support errors, byte arrays, or attributions.</li>
+<li><code>instance.toXML()</code> yields the XML encoding defined in <a href="http://www.openmath.org/standard/om20-2004-06-30/">the OpenMath
+   standard</a>.</li>
+</ul>
+<h2 id="properties-of-openmath-objects">Properties of OpenMath Objects</h2>
+<ul>
+<li><code>instance.type</code> yields the type of an <code>OM</code> instance, a string containing
+   just one or two letters, one of i, f, st, ba, sy, v, a, bi, e, which mean
+   integer, float, string, bytearray, symbol, variable, application,
+   binding, and error, respectively.  These come directly from the JSON
+   encoding documented <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module">here</a>.</li>
+<li><code>instance.value</code> yields the value of those atomic types that have one, as
+   an atomic JavaScript datum.  Integers and floats yield a JavaScript
+   number, strings yield a JavaScript string, and bytearrays yield a
+   JavaScript UInt8Array.  This property is undefined in all other cases.</li>
+<li><code>instance.name</code> yields the string name of a variable or symbol, and is
+   undefined in all other cases.</li>
+<li><code>instance.cd</code> yields the content dictionary of a symbol, and is
+   undefined in all other cases.</li>
+<li><code>instance.uri</code> yields the base URI of a symbol, if one was provided, and
+   is undefined in all other cases.</li>
+<li><code>instance.symbol</code> yields the head symbol for a binding or error object,
+   and is undefined in all other cases.</li>
+<li><code>instance.body</code> yields the body of a binding object, and is undefined in
+   all other cases.</li>
+<li><code>instance.children</code> yields a JavaScript array containing the child nodes
+   for application or error objects, and is an empty array in all other
+   cases.  It may be an empty array in the case of error objects as well,
+   if they have only a head symbol.</li>
+<li><code>instance.variables</code> yields the list of variables bound by a binding
+   object, as a JavaScript array, and is undefined in all other cases.</li>
+</ul>
+<p>Note that each of these properties is actually produced by a getter
+function, and thus is not always as efficient as you might think.  For
+instance, you may not wish to write loops like this:</p>
+<pre><code class="js">for ( var i = 0 ; i &lt; anOMinstance.children.length ; i++ )
+    process( anOMinstance.children[i] ); // calls getter many times
+</code></pre>
+
+<p>Rather, you might do better with a loop like this:</p>
+<pre><code class="js">for ( var i = 0, ch = anOMinstance.children ; i &lt; ch.length ; i++ )
+    process( ch[i] ); // doesn't call getter at all on this line
+</code></pre>
+
+<h2 id="tree-related-functions">Tree-Related Functions</h2>
+<p>As mentioned at the end of <a href="#creating-openmath-objects">the first section</a>,
+it is possible to create two different <code>OM</code> instances that refer to the same
+internal tree structure.  And as mentioned immediately above, calling
+<code>instance.children[i]</code> produces a new instance each time you call it.
+Thus <code>instance.children[0]</code> and <code>instance.children[0]</code> will refer to the
+same internal JSON structure, but will be different <code>OM</code> instances.  We can
+thus check equality in two ways.</p>
+<ul>
+<li><code>instance.sameObjectAs(otherInstance)</code> asks whether two <code>OM</code> instances
+   refer to the same internal JSON data, the same node in the same tree.</li>
+<li><code>instance.equals(other[,checkAttributes])</code> compares structural equality
+   only, and does not care whether the two instances are the same tree.  It
+   includes attributes in the comparison if and only if the second argument
+   is set to true, which is its default.</li>
+<li><code>instance.copy()</code> makes a structural deep copy of an <code>OM</code> instance.</li>
+</ul>
+<p>Examples:</p>
+<pre><code class="js">var A = OM.application( OM.variable( 'f', OM.integer( 3 ) ) ); // f(3)
+var B = A.copy(); // deep copy
+var C = A.children[0]; // builds a new OM instance for the f
+var D = A.children[0]; // does the same thing again
+console.log( A.equals( B ) ); // true
+console.log( A.sameObjectAs( B ) ); // false
+console.log( A == B ); // false
+console.log( C.equals( D ) ); // true
+console.log( C.sameObjectAs( D ) ); // true
+console.log( C == D ); // false
+</code></pre>
+
+<p>You can also modify tree structures as follows.</p>
+<ul>
+<li><code>instance.remove()</code> returns no value, but removes the instance from its
+   parent tree, if that does not break the parent tree's validity.  If it
+   does, this function takes no action.  For instance, you cannot remove
+   the head symbol from a binding or error structure.</li>
+<li><code>instance.replaceWith(other)</code> replaces the instance in its parent
+   structure with the given other <code>OM</code> object, if the resulting tree would
+   be valid, or does nothing otherwise.  The original is returned on
+   success, and undefined is returned on failure.</li>
+<li><code>instance.getAttribute(keySymbol)</code> returns the corresponding value for
+   the given key symbol (an <code>OM</code> instance) in the instance's attributes, if
+   there is one, or undefined if there is not.</li>
+<li><code>instance.setAttribute(keySymbol,value)</code> adds or changes an attribute on
+   the instance.  The key symbol must be an <code>OM</code> symbol instance, and the
+   value must be any <code>OM</code> instance.</li>
+</ul>
+<h2 id="searching-openmath-trees">Searching OpenMath Trees</h2>
+<p>We have devised a way for indexing and addressing children and descendants
+within parent/ancestor trees, and the following functions use that
+convention.  You can read about the indexing/addressing convention <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#parent-child-relationships">in the
+source code documentation here</a>.</p>
+<ul>
+<li><code>instance.findInParent()</code> returns a single index of the form cn/vn/b/s,
+    or a JSON attribute key, or undefined if the instance has no parent, as
+    per the indexing scheme linked to above.  It returns undefined if there
+    is no such child.</li>
+<li><code>instance.findChild(indexString)</code> is the inverse of the previous, in that
+   it takes as input a string that the previous might give as output, and
+   finds the corresponding child tree by that index.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="js">var A = OM.application( OM.variable( 'print' ),
+                        OM.string( 'Hello' ), OM.string( 'World' ) );
+var str1 = A.children[1]; // zero-based, so this is &quot;Hello&quot;
+var index = str1.findInParent(); // &quot;c1&quot;
+var child = A.findChild( index ); // first argument of the print function
+console.log( child.sameObjectAs( str1 ) ); // true
+</code></pre>
+
+<ul>
+<li><code>instance.address(inThisAncestor)</code> is a generalization of <code>indexInParent</code>
+   to arbitrary depth.  It returns an array of indices that one would need
+   to follow, as a path, to walk from the given ancestor node, down through
+   the tree, to reach this instance.  If no ancestor is given (or a
+   non-ancestor is given) then the topmost ancestor is used instead.</li>
+<li><code>instance.index(indexArray)</code> is the inverse of the previous function,
+   taking an array of indices and walking that path into its descendants,
+   returning the resulting subtree, or undefined if one or more of the steps
+   were invalid.</li>
+</ul>
+<p>Examples:</p>
+<pre><code class="js">var deepTree = OM.simple( 'arith1.plus(f(g(x,y)),h(k(z)))' );
+var descendant = deepTree.index( [ 'c1', 'c1', 'c2' ] );
+console.log( descendant.value ); // &quot;y&quot;
+console.log( descendant.address( deepTree ) ); // c1,c1,c2
+console.log( descendant.address( deepTree.children[1] ) ); // c1,c2
+</code></pre>
+
+<p>You can filter children or descendants by predicates.</p>
+<ul>
+<li><code>instance.childrenSatisfying(P)</code> returns an array of all immediate
+   children c for which P(c) returns true.  This array may be empty.  For
+   the purposes of this function, immediate children include not only what
+   is returned by <code>instance.children</code>, but also head symbols of bindings and
+   errors, and bodies of bindings.</li>
+<li><code>instance.descendantsSatisfying(P)</code> is the same as the previous, but
+   considers indirect descendants as well.  Note that original subtrees are
+   returned, not copies, so modifying them will change the original
+   instance.</li>
+<li><code>instance.hasDescendantsSatisfying(P)</code> returns true or false, equal to
+   calling <code>instance.descendantsSatisfying(P).length &gt; 0</code>, except this is
+   faster because it can stop searching once it has found one.</li>
+</ul>
+<h2 id="free-and-bound-variables">Free and Bound Variables</h2>
+<p>Many applications of OpenMath relate to logic and/or programming, in which
+variable binding and substitutin plays a critical role.  The following
+functions make it easy to ask questions and perform the most common
+operations related to variable binding and substitution.</p>
+<ul>
+<li><code>instance.freeVariables()</code> returns and array of free variable names, as
+   strings, that appear anywhere as descendants of the instance.  Each name
+   is only reported once, even if it occurs many times.  This does not recur
+   into attributes or error children.</li>
+<li><code>instance.isFree(inThisAncestor)</code> returns true if all variables free in
+   the instance are free in the given ancestor.  An invalid (or omitted)
+   ancestor causes the routine to use the top-most ancestor as well.  If any
+   variable free in the instance is not free in the ancestor, return false.</li>
+<li><code>instance.occursFree(other)</code> returns true if there exists a descendant of
+   the instance that's structurally equivalent to <code>other</code> and that is free
+   where it occurs in the given instance, or returns false if there is not.</li>
+<li><code>instance.isFreeToReplace(subtree,inThisAncestor)</code> returns true if
+   replacing the given subtree with the given instance would make any
+   variables free in the instance become bound in the given ancestor.  As
+   before, an invalid or omitted ancestor will use the topmost ancestor of
+   the subtree instead.</li>
+<li><code>instance.replaceFree(original,replacement,inThisAncestor)</code> recursively
+   searches through all descendants D of the instance that are structurally
+   equiavlent to the given original, and whenever
+   <code>replacement.isFreeToReplace(D,inThisAncestor)</code> yields true, call
+   <code>D.replaceWith(replacement)</code>.  It does not recur into attributes.</li>
+</ul>
+<h2 id="miscellany">Miscellany</h2>
+<p>Sometimes it is useful to be able to take any JavaScript string and convert
+it into a string that could be used as a valid OpenMath identifier (such as
+a variable or symbol name).  Because only a subset of Unicode is permitted,
+we provide an injection (although not a very compact one) from all strings
+into the set of strings accepted as valid OpenMath identifiers.  The range
+of the function is strings of the form "id_[many decimal digits here]".</p>
+<ul>
+<li><code>OM.encodeAsIdentifier(anyString)</code> performs the encoding</li>
+<li><code>OM.decodeIdentifier(encodedString)</code> inverts the previous function</li>
+</ul>
+<p>Example:</p>
+<pre><code class="js">console.log( OM.encodeAsIdentifier( '#$&amp;@' ) ); // &quot;id_0023002400260040&quot;
+console.log( OM.decodeIdentifier( &quot;id_0023002400260040&quot; ) ); // &quot;#$&amp;@&quot;
+</code></pre>
+
+<p>Some applications find it useful to be able to evaluate simple numerical
+OpenMath expressions.</p>
+<ul>
+<li><code>instance.evaluate()</code> attempts to evaluate a numerical expression that
+   uses the basic operations of arithmetic, powers, roots, trigonometry,
+   pi, e, and a few other simple concepts.  It returns a JavaScript object
+   with two members, <code>value</code> contains the numerical value (if one was able
+   to be computed) and <code>message</code> is a string that may contain some details,
+   such as when rounding needed to occur.</li>
+</ul>
+<p>Example:</p>
+<pre><code class="js">OM.simple( 'trasnc1.cos(0)' ).evaluate();
+// yields {value: 1, message: undefined}
+OM.simple( 'f(x)' ).evaluate();
+// yields {value: undefined, message: &quot;Could not evaluate f(x)&quot;}
+OM.simple( 'e' ).evaluate();
+// yields {value: 2.718281828459045, message: &quot;The actual value of e has been rounded.&quot;}
+</code></pre></div>
+            
+        </div>
+
+        <footer class="col-md-12">
+            <hr>
+            
+            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+        </footer>
+
+        <script src="../js/jquery-1.10.2.min.js"></script>
+        <script src="../js/bootstrap-3.0.3.min.js"></script>
+        <script src="../js/highlight.pack.js"></script>
+        <script>var base_url = '..';</script>
+        <script data-main="../mkdocs/js/search.js" src="../mkdocs/js/require.js"></script>
+        <script src="../js/base.js"></script>
+
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
+                        <h4 class="modal-title" id="exampleModalLabel">Search</h4>
+                    </div>
+                    <div class="modal-body">
+                        <p>
+                            From here you can search these documents. Enter
+                            your search terms below.
+                        </p>
+                        <form role="form">
+                            <div class="form-group">
+                                <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                            </div>
+                        </form>
+                        <div id="mkdocs-search-results"></div>
+                    </div>
+                    <div class="modal-footer">
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </body>
+</html>
