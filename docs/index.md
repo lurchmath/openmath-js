@@ -9,6 +9,11 @@ Import this into your site like so:
 <script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'></script>
 ```
 
+Or install it from npm like so:
+```bash
+npm install openmath-js
+```
+
 ## Background
 
 [OpenMath](http://www.openmath.org) is a data storage standard for
