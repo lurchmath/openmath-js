@@ -30,10 +30,6 @@ v2.0](http://www.openmath.org/standard/om20-2004-06-30/).)
    stands for the head symbol, and `c` can be omitted if empty.
  * No encoding for foreign objects is specified here.
 
-The following line ensures that this file works in Node.js, for testing.
-
-    if not exports? then exports = module?.exports ? window
-
 ## OpenMath Node class
 
     exports.OMNode = exports.OM = OM = class OMNode
@@ -1312,3 +1308,7 @@ real numbers.
             result.message = "Could not evaluate #{@simpleEncode()}"
         # console.log "#{node.simpleEncode()} --> #{JSON.stringify result}"
         result
+
+The following line ensures that this file works in Node.js, for testing.
+
+    if exports? then exports.OMNode = exports.OM = OM
