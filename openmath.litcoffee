@@ -32,7 +32,7 @@ v2.0](http://www.openmath.org/standard/om20-2004-06-30/).)
 
 ## OpenMath Node class
 
-    exports.OMNode = exports.OM = OM = class OMNode
+    OM = class OMNode
 
 ### Class ("static") methods
 
