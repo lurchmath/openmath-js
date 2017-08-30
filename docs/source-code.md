@@ -26,6 +26,6 @@ accessible.
 
 To import the source into your project, you can include it directly from
 GitHub (using [RawGit](http://rawgit.com)) at [this
-URL](https://cdn.rawgit.com/lurchmath/openmath-js/84f93b7c/openmath.js).
+URL](https://cdn.rawgit.com/lurchmath/openmath-js/ea21deba/openmath.js).
 There is a source map file in the same folder; see
 [here](https://github.com/lurchmath/openmath-js/blob/master/README.md).
