@@ -11,7 +11,7 @@ or import with the following one-liner from [RawGit](http://rawgit.com), a
 free CDN.
 
 ```html
-<script src='https://cdn.rawgit.com/lurchmath/openmath-js/4b7cd190/openmath.js'></script>
+<script src='https://cdn.rawgit.com/lurchmath/openmath-js/84f93b7c/openmath.js'></script>
 ```
 
 ### From the command line
