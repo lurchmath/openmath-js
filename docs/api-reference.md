@@ -1,6 +1,36 @@
 
 # API Reference
 
+## Getting started
+
+### In the browser
+
+Import the minified JavaScript, which you can [download from our repository
+directly](https://raw.githubusercontent.com/lurchmath/openmath-js/master/openmath.js)
+or import with the following one-liner from [RawGit](http://rawgit.com), a
+free CDN.
+
+```html
+<script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'></script>
+```
+
+### From the command line
+
+Or install this package into your project the usual way:
+
+```bash
+npm install openmath-js
+```
+
+Then within any of your modules, import it as follows.
+
+```js
+OM = require( "openmath-js" ).OM;
+```
+
+After that, any of the example code snippets in this documentation should
+function as-is.
+
 ## Creating OpenMath objects
 
 The prototype for OpenMath data structures (that is, expression trees) is

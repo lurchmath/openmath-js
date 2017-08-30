@@ -5,6 +5,23 @@
 
 Implementation of (most of) [the OpenMath Standard](https://www.openmath.org/standard/om20-2004-06-30/) in JavaScript
 
+## To get started:
+
+Import this into your site like so:
+
+```html
+<script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'></script>
+```
+
+Or install it from npm like so:
+```bash
+npm install openmath-js
+```
+
+Then see the [API Reference
+page](https://lurchmath.github.io/openmath-js/api-reference) for what to do
+next.
+
 ## Repository contents
 
  * [Source code, in Literate CoffeeScript](openmath.litcoffee)

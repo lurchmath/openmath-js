@@ -3,16 +3,8 @@
 
 ## Get started now
 
-Import this into your site like so:
-
-```html
-<script src='https://cdn.rawgit.com/lurchmath/openmath-js/179286e3/openmath.js'></script>
-```
-
-Or install it from npm like so:
-```bash
-npm install openmath-js
-```
+To import this code via a CDN or `npm`, check out the [API Reference
+Page](api-reference.md).
 
 ## Background
 
