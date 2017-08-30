@@ -10,7 +10,7 @@ Implementation of (most of) [the OpenMath Standard](https://www.openmath.org/sta
 Import this into your site like so:
 
 ```html
-<script src='https://cdn.rawgit.com/lurchmath/openmath-js/ea21deba/openmath.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/openmath-js@1.0.3/openmath.js'></script>
 ```
 
 Or install it from npm like so:
@@ -25,8 +25,7 @@ next.
 ## Repository contents
 
  * [Source code, in Literate CoffeeScript](openmath.litcoffee)
- * [Compiled and minified JavaScript](https://cdn.rawgit.com/lurchmath/openmath-js/ea21deba/openmath.js) that you can import directly into your projects from that URL
- * [Corresponding source map](https://cdn.rawgit.com/lurchmath/openmath-js/ea21deba/openmath.js.map)
+ * [Compiled and minified JavaScript from a CDN](https://cdn.jsdelivr.net/npm/openmath-js@1.0.3/openmath.js) that you can import directly into your projects from that URL
 
 ## Documentation
 
