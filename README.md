@@ -19,7 +19,7 @@ npm install openmath-js
 ```
 
 Then see the [API Reference
-page](https://lurchmath.github.io/openmath-js/api-reference) for what to do
+page](https://lurchmath.github.io/openmath-js/site/api-reference) for what to do
 next.
 
 ## Repository contents
