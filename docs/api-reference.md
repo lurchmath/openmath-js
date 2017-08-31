@@ -378,6 +378,13 @@ console.log( OM.simple( 'f(x)' ).evaluate() ); // error message
 console.log( OM.simple( 'e' ).evaluate() ); // 2.71828... w/rounding message
 </div>
 
+## More Examples
+
+In addition to the brief examples shown in this file, the test suite in the
+source code repository is (naturally) a large set of examples of how the
+module works, and they become useful [at about this point in the
+file](https://github.com/lurchmath/openmath-js/blob/master/openmath-spec.litcoffee#factory-functions).
+
 <script src="https://embed.runkit.com"></script>
 <script>
 var elements = document.getElementsByClassName( 'runnable-example' );
