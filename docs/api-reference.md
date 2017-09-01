@@ -10,7 +10,7 @@ directly](https://raw.githubusercontent.com/lurchmath/openmath-js/master/openmat
 or import from a CDN with the following one-liner.
 
 ```html
-<script src='https://cdn.jsdelivr.net/npm/openmath-js@1.0.3/openmath.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/openmath-js@1/openmath.js'></script>
 ```
 
 ### From the command line
