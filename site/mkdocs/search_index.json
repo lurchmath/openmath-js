@@ -2,7 +2,7 @@
     "docs": [
         {
             "location": "/", 
-            "text": "OpenMath.js Documentation\n\n\nGet started now\n\n\nTo import this code via a CDN or \nnpm\n, check out the \nAPI Reference\nPage\n.\n\n\nBackground\n\n\nOpenMath\n is a data storage standard for\nmeaningful mathematics.  Rather than encoding the appearance of the\nmathematics (like \nLaTeX\n does, for\ninstance), it encodes the meaning of the mathematics (similar to \nContent\nMathML\n).  You can\nread its latest standard\n\nhere\n.\n\n\nMore Information\n\n\nThe following additional information is available in this documentation.\n\n\n\n\nWork Done\n - what the code in this repository can do, and\n   what it cannot do\n\n\nSource Code\n - see the source and/or import it into your\n   own project\n\n\nAPI Reference\n - how to use the various functions and\n   objects provided", 
+            "text": "OpenMath.js Documentation\n\n\nGet started now\n\n\nTo import this code via a CDN or \nnpm\n, check out the \nAPI Reference\nPage\n.\n\n\nBackground\n\n\nOpenMath\n is a data storage standard for\nmeaningful mathematics.  Rather than encoding the appearance of the\nmathematics (like \nLaTeX\n does, for\ninstance), it encodes the meaning of the mathematics (similar to \nContent\nMathML\n).  You can\nread its latest standard\n\nhere\n.\n\n\nMore Information\n\n\nThe following additional information is available in this documentation.\n\n\n\n\nWork Done\n - what the code in this repository can do, and\n   what it cannot do\n\n\nSource Code\n - see the source and/or import it into your\n   own project\n\n\nAPI Reference\n - how to use the various functions and\n   objects provided\n\n\n\n\nMore documentation may be added here in the future. For now you can \nview this repository \n.", 
             "title": "Home"
         }, 
         {
@@ -22,7 +22,7 @@
         }, 
         {
             "location": "/#more-information", 
-            "text": "The following additional information is available in this documentation.   Work Done  - what the code in this repository can do, and\n   what it cannot do  Source Code  - see the source and/or import it into your\n   own project  API Reference  - how to use the various functions and\n   objects provided", 
+            "text": "The following additional information is available in this documentation.   Work Done  - what the code in this repository can do, and\n   what it cannot do  Source Code  - see the source and/or import it into your\n   own project  API Reference  - how to use the various functions and\n   objects provided   More documentation may be added here in the future. For now you can  view this repository  .", 
             "title": "More Information"
         }, 
         {
