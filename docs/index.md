@@ -26,3 +26,5 @@ The following additional information is available in this documentation.
    own project
  * [API Reference](api-reference.md) - how to use the various functions and
    objects provided
+
+   More documentation may be added here in the future. For now you can [view this repository ![github](img/GitHub-Mark-32px.png)](https://github.com/lurchmath/openmath-js).
