@@ -540,7 +540,7 @@ copied, but straight JSON objects are used as-is.
 
 The above functions can be used to create OpenMath data structures of
 arbitrary complexity and type.  But most use cases can be handled with only
-a subset of that full complexity, and we provide the following toosl for
+a subset of that full complexity, and we provide the following tools for
 doing so.
 
 `OMNode.simpleDecode()` takes a string as input (like `OMNode.decode()`
