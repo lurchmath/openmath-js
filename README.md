@@ -1,7 +1,7 @@
 
 # openmath-js
 
-![Build status](https://travis-ci.org/lurchmath/openmath-js.svg?branch=master)
+[![Build Status](https://travis-ci.org/lurchmath/openmath-js.svg?branch=master)](https://travis-ci.org/lurchmath/openmath-js)
 
 Implementation of (most of) [the OpenMath Standard](https://www.openmath.org/standard/om20-2004-06-30/) in JavaScript
 
