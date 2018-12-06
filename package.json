@@ -1,6 +1,6 @@
 {
     "name": "openmath-js",
-    "version": "1.1.0",
+    "version": "1.2.0",
     "description": "Implementation of (most of) the OpenMath Standard in JavaScript",
     "author": "Nathan Carter <ncarter@bentley.edu> (http://nathancarter.github.io",
     "license": "LGPLv3",
