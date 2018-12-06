@@ -231,9 +231,10 @@ text.
                 for c in node.c ? [ ] # children, if any
                     c.p = node
                     setParents c
-                for v in node.v ? [ ] # bound variables, if any
-                    v.p = node
-                    setParents v
+                if node.t is 'bi'
+                    for v in node.v ? [ ] # bound variables, if any
+                        v.p = node
+                        setParents v
                 for own k, v of node.a ? { } # attribute values, if any
                     v.p = node
                     setParents v
