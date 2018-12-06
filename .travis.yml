@@ -1,3 +1,4 @@
+sudo: true
 install:
 - npm install
 - pip install --upgrade pip
