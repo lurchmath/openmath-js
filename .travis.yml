@@ -1,5 +1,6 @@
 install:
 - npm install
+- pip install --upgrade pip
 - pip install mkdocs
 script:
 - ./node_modules/.bin/gulp
