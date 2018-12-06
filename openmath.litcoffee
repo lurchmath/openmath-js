@@ -1310,6 +1310,8 @@ real numbers.
         # console.log "#{node.simpleEncode()} --> #{JSON.stringify result}"
         result
 
-The following line ensures that this file works in Node.js, for testing.
+The following lines ensure that this file works in Node.js, for testing, and
+in a WebWorker if loaded in such a context.
 
-    if exports? then exports.OMNode = exports.OM = OM
+    if ( scope = exports ? self ? WorkerGlobalScope )?
+        scope.OMNode = scope.OM = OM
