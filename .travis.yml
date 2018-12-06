@@ -1,4 +1,6 @@
-install: npm install
+install:
+- npm install
+- pip install mkdocs
 script:
 - ./node_modules/.bin/gulp
 - ./node_modules/.bin/gulp test
