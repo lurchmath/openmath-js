@@ -1,8 +1,4 @@
-sudo: enabled
-install:
-- npm install
-- sudo pip install --upgrade pip
-- pip install mkdocs
+install: npm install
 script:
-- ./node_modules/.bin/gulp
+- ./node_modules/.bin/gulp build
 - ./node_modules/.bin/gulp test
