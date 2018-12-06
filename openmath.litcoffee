@@ -544,7 +544,7 @@ a subset of that full complexity, and we provide the following tools for
 doing so.
 
 `OMNode.simpleDecode()` takes a string as input (like `OMNode.decode()`
-does), but this string is in a much simple form.  Here are the formats it
+does), but this string is in a much simpler form.  Here are the formats it
 supports.
  * `anyIdentifier` will be treated as a variable.  Examples:
    * `x`
