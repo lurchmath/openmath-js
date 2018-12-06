@@ -1,7 +1,7 @@
-sudo: true
+sudo: enabled
 install:
 - npm install
-- pip install --upgrade pip
+- sudo pip install --upgrade pip
 - pip install mkdocs
 script:
 - ./node_modules/.bin/gulp
