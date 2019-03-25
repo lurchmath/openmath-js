@@ -562,12 +562,12 @@ supports.
    * -0.00001
  * a string literal enclosed in quotation marks (`"`) will be treated as a
    string, but with no support for escape codes, other than `\"`.  Examples:
-   * "this is a string"
-   * ""
+   * `"this is a string"`
+   * `""`
  * a string literal enclosed in single quotes (`'`) behaves the same way,
    escaping only `\'`
-   * 'this is also a string, ain\'t it?'
-   * '""'
+   * `'this is also a string, ain\'t it?'`
+   * `'""'`
  * `F(A1,...,An)`, where `F` is any valid form and each `Ai` is as well,
    is interpreted as the application of `F` to the `Ai` in the order given.
    Here `n` may be zero.  Examples:
@@ -579,6 +579,7 @@ supports.
    Examples:
    * `logic.forall[x,P(x)]`
    * `foo.lambda[x,f(x,7,"bar")]`
+
 This syntax does not allow for the expression of OpenMath error objects,
 attributions, symbol URIs, byte arrays, or very large integers.
 
