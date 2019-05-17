@@ -30,3 +30,7 @@ next.
 ## Documentation
 
 [See our documentation site here.](https://lurchmath.github.io/openmath-js/)
+
+## License
+
+[![LGPLv3](https://www.gnu.org/graphics/lgplv3-147x51.png)](https://www.gnu.org/licenses/lgpl-3.0.en.html)
