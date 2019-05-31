@@ -308,7 +308,7 @@ You can filter children or descendants by predicates.
    considers indirect descendants as well.  Note that original subtrees are
    returned, not copies, so modifying them will change the original
    instance.
- * `instance.hasDescendantsSatisfying(P)` returns true or false, equal to
+ * `instance.hasDescendantSatisfying(P)` returns true or false, equal to
    calling `instance.descendantsSatisfying(P).length > 0`, except this is
    faster because it can stop searching once it has found one.
 
