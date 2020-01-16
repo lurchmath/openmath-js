@@ -318,18 +318,26 @@ If they're arrays, ensure they have the same length, type, and contents.
                     return yes
 
 Otherwise, they must be objects, with all the same key-value pairs.
+The one exception to this is that for OpenMath attributes (which are stored
+under key "a"), it is the same if the "a" key is simply absent (meaning no
+attributes) or if its value is the empty object `{ }` (also meaning no
+attributes).
 
                 if a not instanceof Object then return no
                 if b not instanceof Object then return no
                 for own key, value of a
                     if key is 'p' or not attributes and key is 'a'
                         continue
-                    if not b.hasOwnProperty key then return no
+                    if not b.hasOwnProperty key
+                        if key is 'a' then return recur value, { }
+                        return no
                     if not recur value, b[key] then return no
                 for own key, value of b
                     if key is 'p' or not attributes and key is 'a'
                         continue
-                    if not a.hasOwnProperty key then return no
+                    if not a.hasOwnProperty key
+                        if key is 'a' then return recur value, { }
+                        return no
                 yes
             recur @tree, other.tree
 
