@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS102: Remove unnecessary code created because of implicit returns
  * DS103: Rewrite code to no longer use __guard__
  * DS104: Avoid inline assignments
  * DS201: Simplify complex destructure assignments
@@ -1014,7 +1013,7 @@ const OM = (OMNode = (function() {
                 case 's': delete this.parent.tree.s; break;
                 case '{': delete this.parent.tree.a[index]; break;
             }
-            return delete this.tree.p;
+            delete this.tree.p;
         }
 
         // It will also be useful in later functions in this class to be able to
@@ -1249,7 +1248,7 @@ const OM = (OMNode = (function() {
             for (let variable of this.variables) {
                 variable.replaceFree(original, replacement, inThis);
             }
-            return this.children.map((child) =>
+            this.children.map((child) =>
                 child.replaceFree(original, replacement, inThis));
         }
 
