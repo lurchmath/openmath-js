@@ -4,6 +4,10 @@
     "description": "Implementation of (most of) the OpenMath Standard in JavaScript",
     "author": "Nathan Carter <ncarter@bentley.edu> (http://nathancarter.github.io",
     "license": "LGPLv3",
+    "scripts": {
+        "test": "node ./node_modules/jasmine-node/lib/jasmine-node/cli.js --verbose openmath-spec.js",
+        "docs": "mkdocs build"
+    },
     "dependencies": {
         "coffee-script": "1.8.0",
         "jasmine-node": "3.0.0"
