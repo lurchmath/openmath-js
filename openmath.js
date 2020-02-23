@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS101: Remove unnecessary use of Array.from
  * DS102: Remove unnecessary code created because of implicit returns
  * DS103: Rewrite code to no longer use __guard__
  * DS104: Avoid inline assignments
@@ -171,8 +170,8 @@ const OM = (OMNode = (function() {
             // This function verifies that the object doesn't have any keys beyond those on
             // the list, plus 't' for type and 'a' for attributes.
             const checkKeys = function( ...list ) {
-                for (key of Array.from(Object.keys(object))) {
-                    if (!Array.from(list).includes(key) && (key !== 't') && (key !== 'a')) {
+                for (key of Object.keys(object)) {
+                    if (!list.includes(key) && (key !== 't') && (key !== 'a')) {
                         return `Key ${key} not valid in object of type ${object.t}`;
                     }
                 }
@@ -274,7 +273,7 @@ const OM = (OMNode = (function() {
                     if (object.c.length === 0) {
                         return `Application object must have at least one child`;
                     }
-                    for (child of Array.from(object.c)) {
+                    for (child of object.c) {
                         if (reason = this.checkJSON(child)) { return reason; }
                     }
                     break;
@@ -290,7 +289,7 @@ const OM = (OMNode = (function() {
                     if (!(object.v instanceof Array)) {
                         return "In a binding, the v value must be an array";
                     }
-                    for (let variable of Array.from(object.v)) {
+                    for (let variable of object.v) {
                         if (reason = this.checkJSON(variable)) { return reason; }
                         if (variable.t !== 'v') {
                             return `In a binding, all values in the v array must have type v`;
@@ -310,7 +309,7 @@ const OM = (OMNode = (function() {
                     if (!(object.c instanceof Array)) {
                         return "In an error, the c key must be an array";
                     }
-                    for (child of Array.from(object.c)) {
+                    for (child of object.c) {
                         if (reason = this.checkJSON(child)) { return reason; }
                     }
                     break;
@@ -343,12 +342,12 @@ const OM = (OMNode = (function() {
             if (reason = this.checkJSON(json)) { return reason; }
             var setParents = function( node ) {
                 let v;
-                for (let c of Array.from(node.c != null ? node.c : [ ])) { // children, if any
+                for (let c of node.c != null ? node.c : [ ]) { // children, if any
                     c.p = node;
                     setParents(c);
                 }
                 if (node.t === 'bi') {
-                    for (v of Array.from(node.v != null ? node.v : [ ])) { // bound variables, if any
+                    for (v of node.v != null ? node.v : [ ]) { // bound variables, if any
                         v.p = node;
                         setParents(v);
                     }
@@ -413,10 +412,10 @@ const OM = (OMNode = (function() {
             Object.defineProperty(this, 'body',
                 {get() { if (this.tree.b) { return new OMNode(this.tree.b); } else { return undefined; } }});
             Object.defineProperty(this, 'children',
-                {get() { return Array.from(this.tree.c != null ? this.tree.c : [ ]).map((child) => new OMNode(child)); }});
+                {get() { return (this.tree.c != null ? this.tree.c : [ ]).map((child) => new OMNode(child)); }});
             Object.defineProperty(this, 'variables', {
                 get() { if (this.tree.t === 'bi') {
-                    return Array.from(this.tree.v).map((variable) => new OMNode(variable));
+                    return this.tree.v.map((variable) => new OMNode(variable));
                 } else {
                     return [ ];
                 } }
@@ -536,7 +535,7 @@ const OM = (OMNode = (function() {
                     case 'e': case 'a':
                         result = {
                             t : tree.t,
-                            c : ( (Array.from(tree.c).map((child) => recur(child))) )
+                            c : tree.c.map((child) => recur(child))
                         };
                         if (tree.t === 'e') { result.s = recur(tree.s); }
                         return result;
@@ -546,7 +545,7 @@ const OM = (OMNode = (function() {
                         return {
                             t : 'bi',
                             s : recur(tree.s),
-                            v : ( (Array.from(tree.v).map((variable) => recur(variable))) ),
+                            v : tree.v.map((variable) => recur(variable)),
                             b : recur(tree.b)
                         };
                 } })();
@@ -620,7 +619,7 @@ const OM = (OMNode = (function() {
         // instance.  `OMNode` instances are copied, objects are used as-is.
         static application( ...args ) {
             const result = { t : 'a', c : [ ] };
-            for (let arg of Array.from(args)) {
+            for (let arg of args) {
                 result.c.push(arg instanceof OMNode ?
                     JSON.parse(arg.encode()) // copy without parent pointers
                 :
@@ -689,7 +688,7 @@ const OM = (OMNode = (function() {
                 :
                     body
             };
-            for (let variable of Array.from(vars)) {
+            for (let variable of vars) {
                 result.v.push(variable instanceof OMNode ?
                     JSON.parse(variable.encode()) // copy w/o parent pointers
                 :
@@ -715,7 +714,7 @@ const OM = (OMNode = (function() {
                     head,
                 c : [ ]
             };
-            for (let other of Array.from(others)) {
+            for (let other of others) {
                 result.c.push(other instanceof OMNode ?
                     JSON.parse(other.encode()) // copy without parent pointers
                 :
@@ -737,7 +736,7 @@ const OM = (OMNode = (function() {
             const tokens = [ ];
             while (input.length > 0) {
                 const originally = input.length;
-                for (let tokenType of Array.from(tokenTypes)) {
+                for (let tokenType of tokenTypes) {
                     const match = tokenType.pattern.exec(input);
                     if ((match != null) && (match.index === 0)) {
                         tokens.push({
@@ -898,11 +897,11 @@ const OM = (OMNode = (function() {
                     case 'ba': return "'byte array'";
                     case 'e': return "'error'";
                     case 'a':
-                        var children = ( Array.from(tree.c).map((c) => recur(c)) );
+                        var children = ( tree.c.map((c) => recur(c)) );
                         var head = children.shift();
                         return `${head}(${children.join(',')})`;
                     case 'bi':
-                        var variables = ( Array.from(tree.v).map((v) => recur(v)) );
+                        var variables = ( tree.v.map((v) => recur(v)) );
                         head = recur(tree.s);
                         var body = recur(tree.b);
                         return `${head}[${variables.join(',')},${body}]`;
@@ -1144,15 +1143,15 @@ const OM = (OMNode = (function() {
                 case 'v': return [ this.name ];
                 case 'a': case 'c':
                     var result = [ ];
-                    for (let child of Array.from(this.children)) {
-                        for (let free of Array.from(child.freeVariables())) {
-                            if (!Array.from(result).includes(free)) { result.push(free); }
+                    for (let child of this.children) {
+                        for (let free of child.freeVariables()) {
+                            if (!result.includes(free)) { result.push(free); }
                         }
                     }
                     return result;
                 case 'bi':
-                    var boundByThis = ( Array.from(this.variables).map((v) => v.name) );
-                    return ( Array.from(this.body.freeVariables()).filter((varname) => !Array.from(boundByThis).includes(varname)) );
+                    var boundByThis = this.variables.map((v) => v.name);
+                    return this.body.freeVariables().filter((varname) => !boundByThis.includes(varname));
                 default: return [ ];
             }
         }
@@ -1168,9 +1167,9 @@ const OM = (OMNode = (function() {
             let walk = this;
             while (walk) {
                 if (walk.type === 'bi') {
-                    const boundHere = ( Array.from(walk.variables).map((v) => v.name) );
-                    for (let variable of Array.from(freeVariables)) {
-                        if (Array.from(boundHere).includes(variable)) { return false; }
+                    const boundHere = walk.variables.map((v) => v.name);
+                    for (let variable of freeVariables) {
+                        if (boundHere.includes(variable)) { return false; }
                     }
                 }
                 if (walk.sameObjectAs(inThis)) { break; }
@@ -1192,7 +1191,7 @@ const OM = (OMNode = (function() {
             if (this.equals( findThis ) && this.isFree()) { return true; }
             if (this.symbol != null ? this.symbol.equals(findThis) : undefined) { return true; }
             if (this.body != null ? this.body.occursFree(findThis) : undefined) { return true; }
-            for (let child of Array.from(this.children)) {
+            for (let child of this.children) {
                 if (child.occursFree(findThis)) { return true; }
             }
             return false;
@@ -1247,10 +1246,10 @@ const OM = (OMNode = (function() {
             if (this.body != null) {
                 this.body.replaceFree(original, replacement, inThis);
             }
-            for (let variable of Array.from(this.variables)) {
+            for (let variable of this.variables) {
                 variable.replaceFree(original, replacement, inThis);
             }
-            return Array.from(this.children).map((child) =>
+            return this.children.map((child) =>
                 child.replaceFree(original, replacement, inThis));
         }
 
@@ -1274,7 +1273,7 @@ const OM = (OMNode = (function() {
             if (this.body != null) { children.push(this.body); }
             return (() => {
                 const result = [];
-                 for (let child of Array.from(children)) {
+                 for (let child of children) {
                      if (filter(child)) {
                         result.push(child);
                     }
@@ -1294,7 +1293,7 @@ const OM = (OMNode = (function() {
             if (filter == null) { filter = () => true; }
             let results = [ ];
             if (filter(this)) { results.push(this); }
-            for (let child of Array.from(this.childrenSatisfying())) {
+            for (let child of this.childrenSatisfying()) {
                 results = results.concat(child.descendantsSatisfying(filter));
             }
             return results;
@@ -1307,7 +1306,7 @@ const OM = (OMNode = (function() {
         hasDescendantSatisfying( filter ) {
             if (filter == null) { filter = () => true; }
             if (filter(this)) { return true; }
-            for (let child of Array.from(this.childrenSatisfying())) {
+            for (let child of this.childrenSatisfying()) {
                 if (child.hasDescendantSatisfying(filter)) { return true; }
             }
             return false;
@@ -1384,11 +1383,11 @@ OM.prototype.toXML = function() {
             .replace(/</g, '&lt;');
             return `<OMSTR>${text}</OMSTR>`;
         case 'a':
-            var inside = ( Array.from(this.children).map((c) => indent(c.toXML())) ).join('\n');
+            var inside = ( this.children.map((c) => indent(c.toXML())) ).join('\n');
             return `<OMA>\n${inside}\n</OMA>`;
         case 'bi':
             var head = indent(this.symbol.toXML());
-            var vars = ( Array.from(this.variables).map((v) => v.toXML()) ).join('');
+            var vars = ( this.variables.map((v) => v.toXML()) ).join('');
             vars = indent(`<OMBVAR>${vars}</OMBVAR>`);
             var body = indent(this.body.toXML());
             return `<OMBIND>\n${head}\n${vars}\n${body}\n</OMBIND>`;
@@ -1417,7 +1416,7 @@ OM.prototype.evaluate = function() {
         let value;
         let message = undefined;
         const args = [ ];
-        for (let index of Array.from(indices)) {
+        for (let index of indices) {
             arg = this.children[index].evaluate();
             if ((arg.value == null)) { return arg; }
             if (arg.message != null) {
@@ -1427,7 +1426,7 @@ OM.prototype.evaluate = function() {
             args.push(arg.value);
         }
         try {
-            value = func(...Array.from(args || []));
+            value = func(...(args || []));
         } catch (e) {
             if ((message == null)) { message = ''; } else { message += '\n'; }
             message += e.message;
