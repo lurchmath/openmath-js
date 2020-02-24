@@ -1,11 +1,4 @@
 /*
- * decaffeinate suggestions:
- * DS104: Avoid inline assignments
- * DS201: Simplify complex destructure assignments
- * DS202: Simplify dynamic range loops
- * DS207: Consider shorter variations of null checks
- * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
- *
  * Other to-dos:
  * Get byte array tests working again (lines 832ff in openmath.test.js).
  * Verify that the index.js file still works
