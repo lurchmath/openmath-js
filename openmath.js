@@ -2,6 +2,7 @@
  * Other to-dos:
  * Get byte array tests working again (lines 832ff in openmath.test.js).
  * Verify that the index.js file still works
+ * Change comments to JSDoc
  */
 
 // # OpenMath module
@@ -365,28 +366,36 @@ export class OMNode {
     // in that case.
     constructor( tree ) {
         this.tree = tree;
-        Object.defineProperty(this, 'parent',
-            {get() { if (this.tree.p) { return new OMNode(this.tree.p); } else { return undefined; } }});
-        Object.defineProperty(this, 'type', {get() { return this.tree.t; }});
-        Object.defineProperty(this, 'value',
-            {get() { if (this.tree.t !== 'bi') { return this.tree.v; } else { return undefined; } }});
-        Object.defineProperty(this, 'name', {get() { return this.tree.n; }});
-        Object.defineProperty(this, 'cd', {get() { return this.tree.cd; }});
-        Object.defineProperty(this, 'uri', {get() { return this.tree.uri; }});
-        Object.defineProperty(this, 'symbol',
-            {get() { if (this.tree.s) { return new OMNode(this.tree.s); } else { return undefined; } }});
-        Object.defineProperty(this, 'body',
-            {get() { if (this.tree.b) { return new OMNode(this.tree.b); } else { return undefined; } }});
-        Object.defineProperty(this, 'children',
-            {get() { return (this.tree.c != null ? this.tree.c : [ ]).map(child => new OMNode(child)); }});
-        Object.defineProperty(this, 'variables', {
-            get() { if (this.tree.t === 'bi') {
-                return this.tree.v.map(variable => new OMNode(variable));
-            } else {
-                return [ ];
-            } }
-        });
     }
+
+    // Define getters for convenience:
+    get parent () {
+        if (this.tree.p) { return new OMNode(this.tree.p); } else { return undefined; }
+    }
+    get type () { return this.tree.t; }
+    get value () {
+        if (this.tree.t !== 'bi') { return this.tree.v; } else { return undefined; }
+    }
+    get name () { return this.tree.n; }
+    get cd () { return this.tree.cd; }
+    get uri () { return this.tree.uri; }
+    get symbol () {
+        if (this.tree.s) { return new OMNode(this.tree.s); } else { return undefined; }
+    }
+    get body () {
+        if (this.tree.b) { return new OMNode(this.tree.b); } else { return undefined; }
+    }
+    get children () {
+        return (this.tree.c != null ? this.tree.c : [ ]).map(child => new OMNode(child));
+    }
+    get variables () {
+        if (this.tree.t === 'bi') {
+            return this.tree.v.map(variable => new OMNode(variable));
+        } else {
+            return [ ];
+        }
+    }
+
 
     // ### Serialization
     //
