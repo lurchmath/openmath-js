@@ -16,6 +16,14 @@ MathML](https://www.w3.org/TR/MathML2/chapter4.html#contm.intro)).  You can
 read its latest standard
 [here](http://www.openmath.org/standard/om20-2004-06-30/).
 
+## Version history
+
+ * Version 2.0.0 - Feb 24, 2020 - converted to ES6 module format, and thus did
+   not yet publish this version to npm, because that ecosystem is not yet ready
+   for ES6 modules.
+ * Up through 1.2.3, no detailed version information is available, but all
+   versions were published to npm.
+
 ## More Information
 
 The following additional information is available in this documentation.
