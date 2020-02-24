@@ -1,6 +1,5 @@
 /*
  * Other to-dos:
- * Get byte array tests working again (lines 832ff in openmath.test.js).
  * Verify that the index.js file still works
  * Change comments to JSDoc
  */
@@ -328,8 +327,21 @@ export class OMNode {
         if (typeof json === 'string') {
             try { json = JSON.parse(json); } catch (e) { return e.message; }
         }
+        let fixByteArrays = function ( node ) {
+            if ( node.t === 'ba' && node.v instanceof Array )
+                node.v = new Uint8Array( node.v )
+            for (let c of node.c != null ? node.c : [ ]) { // children, if any
+                fixByteArrays(c);
+            }
+            const object = node.a != null ? node.a : { };
+            for (let k of Object.keys(object)) { // attribute values, if any
+                fixByteArrays(object[k]);
+            }
+            if (node.b != null) { fixByteArrays(node.b); }  // body, if any
+        }
+        fixByteArrays( json )
         if (reason = this.checkJSON(json)) { return reason; }
-        var setParents = function( node ) {
+        let setParents = function( node ) {
             let v;
             for (let c of node.c != null ? node.c : [ ]) { // children, if any
                 c.p = node;
@@ -349,7 +361,7 @@ export class OMNode {
             }
             // head symbol and body object, if any
             if (node.s != null) { node.s.p = node;  setParents(node.s); }
-            if (node.b != null) { node.b.p = node;  return setParents(node.b); }
+            if (node.b != null) { node.b.p = node;  setParents(node.b); }
         };
         setParents(json);
         json.p = null;
@@ -404,7 +416,13 @@ export class OMNode {
     // `JSON.stringify`, but filters out parent pointers.
     encode() {
         return JSON.stringify(this.tree, function( k, v ) {
-            if (k === 'p') { return undefined; } else { return v; }
+            if (k === 'p') {
+                return undefined;
+            } else if (v instanceof Uint8Array) {
+                return Array.from( v )
+            } else {
+                return v;
+            }
         });
     }
 

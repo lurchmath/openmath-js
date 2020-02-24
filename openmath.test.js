@@ -825,23 +825,17 @@ describe('Factory functions', function() {
         expect( OM.string(null) ).toMatch(/Value for st type was/);
 
         // Byte arrays with correct data.
-
-        // THE FOLLOWING TESTS DO NOT ACTUALLY PASS RIGHT NOW.
-        // SINCE WRITING THEM SOMETHING HAS CHANGED ABOUT JSON AND UINT8ARRAYS.
-
-        // node = OM.bytearray(new Uint8Array);
-        // console.log( node.encode() )
-        // let redone = JSON.parse(node.encode())
-        // expect( node.t ).toEqual( redone.t )
-        // expect( node.v ).toEqual( redone.v )
-        // node = OM.bytearray(new Uint8Array([ 3, 1, 4, 1, 5, 9 ]));
-        // console.log( node.encode() )
-        // redone = JSON.parse(node.encode())
-        // expect( node.t ).toEqual( redone.t )
-        // expect( node.v ).toEqual( redone.v )
+        node = OM.bytearray(new Uint8Array);
+        expect( JSON.parse(node.encode()) ).toEqual({
+            t : 'ba', v : [] });
+        node = OM.bytearray(new Uint8Array([ 3, 1, 4, 1, 5, 9 ]));
+        expect( JSON.parse(node.encode()) ).toEqual({
+            t : 'ba',
+            v : [ 3, 1, 4, 1, 5, 9 ]
+        });
 
         // An invalid byte array.
-        expect( OM.bytearray([ 1, 2, 3 ]) ).toMatch(/not an instance of/);
+        expect( OM.bytearray( 123 ) ).toMatch(/not an instance of/);
 
         // Symbols with correct data.
         node = OM.symbol('name', 'cd');
@@ -1071,7 +1065,7 @@ describe('Factory functions', function() {
         node = OM.str('Hello there');
         expect( JSON.parse(node.encode()) ).toEqual({
             t : 'st', v : 'Hello there' });
-        expect( OM.byt([ 1, 2, 3 ]) ).toMatch(/not an instance of/);
+        expect( OM.byt( 123 ) ).toMatch(/not an instance of/);
         node = OM.sym('name', 'cd');
         expect( JSON.parse(node.encode()) ).toEqual({
             t : 'sy', n : 'name', cd : 'cd' });
