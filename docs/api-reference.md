@@ -254,10 +254,20 @@ within parent/ancestor trees, and the following functions use that
 convention.  You can read about the indexing/addressing convention [in the
 source code documentation here](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#parent-child-relationships).
 
- * `instance.findInParent()` returns a single index of the form cn/vn/b/s,
-    or a JSON attribute key, or undefined if the instance has no parent, as
-    per the indexing scheme linked to above.  It returns undefined if there
-    is no such child.
+ * `instance.findInParent()` returns a single string indicating the index of
+    the node in its parent.  The return value will be one of five types:
+     * a string containing "c" followed by a number, as in 'c7' - this means
+       that the node is in it's parent's `children` array, and is at index 7
+     * a string containing "v" followed by a number, as in 'v0' - this is the
+       same as the previous, but for the parent's `variables` array
+     * the string "b" - this means that the node is the body and its parent is
+       a binding
+     * the string "s" - this means that the node is a symbol for its parent,
+       which is either an error or a binding
+     * a lengthier string beginning with "{" - this is the JSON encoded version
+       of the attribute key for which the node is the corresponding value
+     * undefined if none of the above apply (e.g., no parent, or invalid tree
+       structure)
  * `instance.findChild(indexString)` is the inverse of the previous, in that
    it takes as input a string that the previous might give as output, and
    finds the corresponding child tree by that index.
