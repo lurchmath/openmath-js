@@ -364,28 +364,6 @@ export class OMNode {
     // current structure, except children and variables, which return empty arrays
     // in that case.
     constructor( tree ) {
-        this.encode = this.encode.bind(this);
-        this.equals = this.equals.bind(this);
-        this.sameObjectAs = this.sameObjectAs.bind(this);
-        this.copy = this.copy.bind(this);
-        this.simpleEncode = this.simpleEncode.bind(this);
-        this.findInParent = this.findInParent.bind(this);
-        this.findChild = this.findChild.bind(this);
-        this.address = this.address.bind(this);
-        this.index = this.index.bind(this);
-        this.remove = this.remove.bind(this);
-        this.replaceWith = this.replaceWith.bind(this);
-        this.getAttribute = this.getAttribute.bind(this);
-        this.removeAttribute = this.removeAttribute.bind(this);
-        this.setAttribute = this.setAttribute.bind(this);
-        this.freeVariables = this.freeVariables.bind(this);
-        this.isFree = this.isFree.bind(this);
-        this.occursFree = this.occursFree.bind(this);
-        this.isFreeToReplace = this.isFreeToReplace.bind(this);
-        this.replaceFree = this.replaceFree.bind(this);
-        this.childrenSatisfying = this.childrenSatisfying.bind(this);
-        this.descendantsSatisfying = this.descendantsSatisfying.bind(this);
-        this.hasDescendantSatisfying = this.hasDescendantSatisfying.bind(this);
         this.tree = tree;
         Object.defineProperty(this, 'parent',
             {get() { if (this.tree.p) { return new OMNode(this.tree.p); } else { return undefined; } }});
