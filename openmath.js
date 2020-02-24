@@ -1,6 +1,5 @@
 /*
  * Other to-dos:
- * Verify that the index.js file still works
  * Change comments to JSDoc
  */
 
