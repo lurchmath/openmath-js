@@ -5,6 +5,10 @@
  * DS202: Simplify dynamic range loops
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
+ *
+ * Other to-dos:
+ * Get byte array tests working again (lines 832ff in openmath.test.js).
+ * Verify that the index.js file still works
  */
 
 // # OpenMath module
@@ -119,7 +123,7 @@ const tokenTypes = [ {
     pattern : /\]/
 } ];
 
-class OMNode {
+export class OMNode {
 
     // ### Class ("static") methods
     //
@@ -1302,7 +1306,7 @@ class OMNode {
         return false;
     }
 }
-const OM = OMNode;
+export const OM = OMNode;
 
 // ## Nicknames
 //
@@ -1532,11 +1536,3 @@ OM.prototype.evaluate = function() {
     // console.log "#{node.simpleEncode()} --> #{JSON.stringify result}"
     return result;
 };
-
-// The following lines ensure that this file works in Node.js, for testing, and
-// in a WebWorker if loaded in such a context.
-let left = typeof exports !== 'undefined' && exports !== null ? exports : self
-let scope = left != null ? left : WorkerGlobalScope
-if ( scope != null) {
-    scope.OMNode = (scope.OM = OM);
-}

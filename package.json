@@ -5,12 +5,19 @@
     "author": "Nathan Carter <ncarter@bentley.edu> (http://nathancarter.github.io",
     "license": "LGPLv3",
     "scripts": {
-        "test": "node ./node_modules/jasmine-node/lib/jasmine-node/cli.js --verbose openmath-spec.js",
+        "test": "jest --verbose",
         "docs": "mkdocs build"
     },
+    "jest": {
+        "testEnvironment": "node",
+        "transform": {
+            ".js": "jest-esm-transformer"
+        },
+        "transformIgnorePatterns": []
+    },
+    "type": "module",
     "dependencies": {
-        "coffee-script": "1.8.0",
-        "jasmine-node": "3.0.0"
+        "coffee-script": "1.8.0"
     },
     "repository": {
         "type": "git",
@@ -24,6 +31,8 @@
         "gulp-coffee": "^3.0.3",
         "gulp-shell": "^0.6.5",
         "gulp-sourcemaps": "^2.6.4",
-        "gulp-uglify": "^3.0.1"
+        "gulp-uglify": "^3.0.1",
+        "jest": "^25.1.0",
+        "jest-esm-transformer": "^1.0.0"
     }
 }
