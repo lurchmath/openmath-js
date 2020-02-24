@@ -3,7 +3,6 @@
  * DS104: Avoid inline assignments
  * DS201: Simplify complex destructure assignments
  * DS202: Simplify dynamic range loops
- * DS205: Consider reworking code to avoid use of IIFEs
  * DS207: Consider shorter variations of null checks
  * Full docs: https://github.com/decaffeinate/decaffeinate/blob/master/docs/suggestions.md
  */
@@ -119,8 +118,6 @@ const tokenTypes = [ {
     name : 'closeBracket',
     pattern : /\]/
 } ];
-
-let left, scope;
 
 class OMNode {
 
@@ -406,10 +403,10 @@ class OMNode {
         Object.defineProperty(this, 'body',
             {get() { if (this.tree.b) { return new OMNode(this.tree.b); } else { return undefined; } }});
         Object.defineProperty(this, 'children',
-            {get() { return (this.tree.c != null ? this.tree.c : [ ]).map((child) => new OMNode(child)); }});
+            {get() { return (this.tree.c != null ? this.tree.c : [ ]).map(child => new OMNode(child)); }});
         Object.defineProperty(this, 'variables', {
             get() { if (this.tree.t === 'bi') {
-                return this.tree.v.map((variable) => new OMNode(variable));
+                return this.tree.v.map(variable => new OMNode(variable));
             } else {
                 return [ ];
             } }
@@ -506,43 +503,50 @@ class OMNode {
     copy() {
         var recur = function( tree ) {
             let result;
-            result = (() => { switch (tree.t) {
+            switch (tree.t) {
 
                 // Integers, floats, and strings are easy to copy; just duplicate type and
                 // value.  Variables and symbols are easy for the same reason, but different
                 // atomic members.
-                case 'i': case 'f': case 'st': return { t : tree.t, v : tree.v };
-                case 'v': return { t : 'v', n : tree.n };
+                case 'i': case 'f': case 'st':
+                    result = { t : tree.t, v : tree.v };
+                    break
+                case 'v':
+                    result = { t : 'v', n : tree.n };
+                    break
                 case 'sy':
                     result = { t : 'sy', n : tree.n, cd : tree.cd };
                     if (tree.hasOwnProperty('uri')) {
                         result.uri = tree.uri;
                     }
-                    return result;
+                    break
 
                 // Byte arrays require making a copy of the byte array object, which can be
                 // accomplished with the constructor.
-                case 'ba': return { t : 'ba', v : new Uint8Array(tree.v) };
+                case 'ba':
+                    result = { t : 'ba', v : new Uint8Array(tree.v) };
+                    break
 
                 // For errors and applications, we copy the children array; for errors we also
                 // include the symbol.
                 case 'e': case 'a':
                     result = {
                         t : tree.t,
-                        c : tree.c.map((child) => recur(child))
+                        c : tree.c.map(child => recur(child))
                     };
                     if (tree.t === 'e') { result.s = recur(tree.s); }
-                    return result;
+                    break
 
                 // Lastly, for bindings, we copy each sub-part: symbol, body, variable list.
                 case 'bi':
-                    return {
+                    result = {
                         t : 'bi',
                         s : recur(tree.s),
-                        v : tree.v.map((variable) => recur(variable)),
+                        v : tree.v.map(variable => recur(variable)),
                         b : recur(tree.b)
                     };
-            } })();
+                    break
+            }
 
             // Then no matter what we created, we copy the attributes over as well.
             const object = tree.a != null ? tree.a : { };
@@ -891,11 +895,11 @@ class OMNode {
                 case 'ba': return "'byte array'";
                 case 'e': return "'error'";
                 case 'a':
-                    var children = ( tree.c.map((c) => recur(c)) );
+                    var children = ( tree.c.map(c => recur(c)) );
                     var head = children.shift();
                     return `${head}(${children.join(',')})`;
                 case 'bi':
-                    var variables = ( tree.v.map((v) => recur(v)) );
+                    var variables = ( tree.v.map(v => recur(v)) );
                     head = recur(tree.s);
                     var body = recur(tree.b);
                     return `${head}[${variables.join(',')},${body}]`;
@@ -1146,8 +1150,8 @@ class OMNode {
                 }
                 return result;
             case 'bi':
-                var boundByThis = this.variables.map((v) => v.name);
-                return this.body.freeVariables().filter((varname) => !boundByThis.includes(varname));
+                var boundByThis = this.variables.map(v => v.name);
+                return this.body.freeVariables().filter(varname => !boundByThis.includes(varname));
             default: return [ ];
         }
     }
@@ -1163,7 +1167,7 @@ class OMNode {
         let walk = this;
         while (walk) {
             if (walk.type === 'bi') {
-                const boundHere = walk.variables.map((v) => v.name);
+                const boundHere = walk.variables.map(v => v.name);
                 for (let variable of freeVariables) {
                     if (boundHere.includes(variable)) { return false; }
                 }
@@ -1245,7 +1249,7 @@ class OMNode {
         for (let variable of this.variables) {
             variable.replaceFree(original, replacement, inThis);
         }
-        this.children.map((child) =>
+        this.children.map(child =>
             child.replaceFree(original, replacement, inThis));
     }
 
@@ -1261,21 +1265,11 @@ class OMNode {
     // the original expression.
     childrenSatisfying( filter ) {
         if (filter == null) { filter = () => true; }
-        let {
-            children
-        } = this;
+        let { children } = this;
         if (this.symbol != null) { children.push(this.symbol); }
         children = children.concat(this.variables);
         if (this.body != null) { children.push(this.body); }
-        return (() => {
-            const result = [];
-             for (let child of children) {
-                 if (filter(child)) {
-                    result.push(child);
-                }
-            }
-            return result;
-        })();
+        return children.filter( filter )
     }
 
     // The following function returns an array of all subexpressions (not just
@@ -1377,11 +1371,11 @@ OM.prototype.toXML = function() {
             .replace(/</g, '&lt;');
             return `<OMSTR>${text}</OMSTR>`;
         case 'a':
-            var inside = ( this.children.map((c) => indent(c.toXML())) ).join('\n');
+            var inside = ( this.children.map(c => indent(c.toXML())) ).join('\n');
             return `<OMA>\n${inside}\n</OMA>`;
         case 'bi':
             var head = indent(this.symbol.toXML());
-            var vars = ( this.variables.map((v) => v.toXML()) ).join('');
+            var vars = ( this.variables.map(v => v.toXML()) ).join('');
             vars = indent(`<OMBVAR>${vars}</OMBVAR>`);
             var body = indent(this.body.toXML());
             return `<OMBIND>\n${head}\n${vars}\n${body}\n</OMBIND>`;
@@ -1430,93 +1424,107 @@ OM.prototype.evaluate = function() {
             message
         };
     };
-    result = (() => { switch (this.type) {
-        case 'i': case 'f': return {value : new Number(this.value)};
-        case 'st': case 'ba': return {value : this.value};
-        case 'v': switch (this.name) {
-            case '\u03c0': // pi
-                return {
-                    value : Math.PI,
-                    message : 'The actual value of \u03c0 has been rounded.'
-                };
-            case 'e':
-                return {
-                    value : Math.exp(1),
-                    message : 'The actual value of e has been rounded.'
-                };
-        } break;
-        case 'sy': switch (this.simpleEncode()) {
-            case 'units.degrees':
-                return {
-                    value : Math.PI/180,
-                    message : `Converting to degrees used an approximation of \u03c0.` // that is, pi
-                };
-            case 'units.percent': return {value : 0.01};
-            case 'units.dollars':
-                return {
-                    value : 1,
-                    message : 'Dollar units were dropped'
-                };
-        } break;
-        case 'a': switch (this.children[0].simpleEncode()) {
-            case 'arith1.plus': return call(( (a, b) => a + b), 1, 2);
-            case 'arith1.minus': return call(( (a, b) => a - b), 1, 2);
-            case 'arith1.times': return call(( (a, b) => a * b), 1, 2);
-            case 'arith1.divide': return call(( (a, b) => a / b), 1, 2);
-            case 'arith1.power': return call(Math.pow, 1, 2);
-            case 'arith1.root':
-                return call(( (a, b) => Math.pow(b, 1/a)), 1, 2);
-            case 'arith1.abs': return call(Math.abs, 1);
-            case 'arith1.unary_minus': return call(( a => -a), 1);
-            case 'relation1.eq': return call(( (a, b) => a === b), 1, 2);
-            case 'relation1.approx':
-                var tmp = call(( (a, b) => Math.abs( a - b ) < 0.01),
-                    1, 2);
-                if (( tmp.message != null ? tmp.message : (tmp.message = '') ).length) { tmp.message += '\n'; }
-                tmp.message += `Values were rounded to two decimal places for approximate comparison.`;
-                return tmp;
-            case 'relation1.neq':
-                return call(( (a, b) => a !== b), 1, 2);
-            case 'relation1.lt': return call(( (a, b) => a < b), 1, 2);
-            case 'relation1.gt': return call(( (a, b) => a > b), 1, 2);
-            case 'relation1.le': return call(( (a, b) => a <= b), 1, 2);
-            case 'relation1.ge': return call(( (a, b) => a >= b), 1, 2);
-            case 'logic1.not': return call(( a => !a), 1);
-            case 'transc1.sin': return call(Math.sin, 1);
-            case 'transc1.cos': return call(Math.cos, 1);
-            case 'transc1.tan': return call(Math.tan, 1);
-            case 'transc1.cot': return call(( a => 1/Math.tan(a)), 1);
-            case 'transc1.sec': return call(( a => 1/Math.cos(a)), 1);
-            case 'transc1.csc': return call(( a => 1/Math.sin(a)), 1);
-            case 'transc1.arcsin': return call(Math.asin, 1);
-            case 'transc1.arccos': return call(Math.acos, 1);
-            case 'transc1.arctan': return call(Math.atan, 1);
-            case 'transc1.arccot':
-                return call(( a => Math.atan(1/a)), 1);
-            case 'transc1.arcsec':
-                return call(( a => Math.acos(1/a)), 1);
-            case 'transc1.arccsc':
-                return call(( a => Math.asin(1/a)), 1);
-            case 'transc1.ln': return call(Math.log, 1);
-            case 'transc1.log': return call((base, arg) => Math.log( arg ) / Math.log( base )
-            , 1, 2);
-            case 'integer1.factorial':
-                return call(function( a ) {
-                    if (a <= 1) { return 1; }
-                    if (a >= 20) { return Infinity; }
-                    result = 1;
-                    for (let i = 1, end = a|0, asc = 1 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { result *= i; }
-                    return result;
-                }
-                , 1);
-        } break;
-    } })();
-            // Maybe later I will come back and implement these, but this
-            // is just a demo app, so there is no need to get fancy.
-            // when 'arith1.sum'
-            // when 'calculus1.int'
-            // when 'calculus1.defint'
-            // when 'limit1.limit'
+    switch (this.type) {
+        case 'i': case 'f':
+            result = {value : new Number(this.value)};
+            break
+        case 'st': case 'ba':
+            result = {value : this.value};
+            break
+        case 'v':
+            switch (this.name) {
+                case '\u03c0': // pi
+                    result =  {
+                        value : Math.PI,
+                        message : 'The actual value of \u03c0 has been rounded.'
+                    };
+                    break
+                case 'e':
+                    result =  {
+                        value : Math.exp(1),
+                        message : 'The actual value of e has been rounded.'
+                    };
+            }
+            break
+        case 'sy':
+            switch (this.simpleEncode()) {
+                case 'units.degrees':
+                    result = {
+                        value : Math.PI/180,
+                        message : `Converting to degrees used an approximation of \u03c0.` // that is, pi
+                    };
+                    break
+                case 'units.percent':
+                    result = {value : 0.01};
+                    break
+                case 'units.dollars':
+                    result = {
+                        value : 1,
+                        message : 'Dollar units were dropped'
+                    };
+            }
+            break
+        case 'a':
+            switch (this.children[0].simpleEncode()) {
+                case 'arith1.plus': result = call(( (a, b) => a + b), 1, 2); break
+                case 'arith1.minus': result = call(( (a, b) => a - b), 1, 2); break
+                case 'arith1.times': result = call(( (a, b) => a * b), 1, 2); break
+                case 'arith1.divide': result = call(( (a, b) => a / b), 1, 2); break
+                case 'arith1.power': result = call(Math.pow, 1, 2); break
+                case 'arith1.root':
+                    result = call(( (a, b) => Math.pow(b, 1/a)), 1, 2); break
+                case 'arith1.abs': result = call(Math.abs, 1); break
+                case 'arith1.unary_minus': result = call(( a => -a), 1); break
+                case 'relation1.eq': result = call(( (a, b) => a === b), 1, 2); break
+                case 'relation1.approx':
+                    var tmp = call(( (a, b) => Math.abs( a - b ) < 0.01),
+                        1, 2);
+                    if (( tmp.message != null ? tmp.message : (tmp.message = '') ).length) { tmp.message += '\n'; }
+                    tmp.message += `Values were rounded to two decimal places for approximate comparison.`;
+                    result = tmp;
+                    break
+                case 'relation1.neq':
+                    result = call(( (a, b) => a !== b), 1, 2); break
+                case 'relation1.lt': result = call(( (a, b) => a < b), 1, 2); break
+                case 'relation1.gt': result = call(( (a, b) => a > b), 1, 2); break
+                case 'relation1.le': result = call(( (a, b) => a <= b), 1, 2); break
+                case 'relation1.ge': result = call(( (a, b) => a >= b), 1, 2); break
+                case 'logic1.not': result = call(( a => !a), 1); break
+                case 'transc1.sin': result = call(Math.sin, 1); break
+                case 'transc1.cos': result = call(Math.cos, 1); break
+                case 'transc1.tan': result = call(Math.tan, 1); break
+                case 'transc1.cot': result = call(( a => 1/Math.tan(a)), 1); break
+                case 'transc1.sec': result = call(( a => 1/Math.cos(a)), 1); break
+                case 'transc1.csc': result = call(( a => 1/Math.sin(a)), 1); break
+                case 'transc1.arcsin': result = call(Math.asin, 1); break
+                case 'transc1.arccos': result = call(Math.acos, 1); break
+                case 'transc1.arctan': result = call(Math.atan, 1); break
+                case 'transc1.arccot':
+                    result = call(( a => Math.atan(1/a)), 1); break
+                case 'transc1.arcsec':
+                    result = call(( a => Math.acos(1/a)), 1); break
+                case 'transc1.arccsc':
+                    result = call(( a => Math.asin(1/a)), 1); break
+                case 'transc1.ln': result = call(Math.log, 1); break
+                case 'transc1.log':
+                    result = call((base, arg) => Math.log( arg ) / Math.log( base ), 1, 2);
+                    break
+                case 'integer1.factorial':
+                    result = call(function( a ) {
+                        if (a <= 1) { return 1; }
+                        if (a >= 20) { return Infinity; }
+                        result = 1;
+                        for (let i = 1, end = a|0, asc = 1 <= end; asc ? i <= end : i >= end; asc ? i++ : i--) { result *= i; }
+                        return result;
+                    }, 1);
+                // Maybe later I will come back and implement these, but this
+                // is just a demo app, so there is no need to get fancy.
+                // when 'arith1.sum'
+                // when 'calculus1.int'
+                // when 'calculus1.defint'
+                // when 'limit1.limit'
+            }
+    }
     if (result == null) { result = {value : undefined}; }
     if (typeof result.value === 'undefined') {
         result.message = `Could not evaluate ${this.simpleEncode()}`;
@@ -1527,6 +1535,8 @@ OM.prototype.evaluate = function() {
 
 // The following lines ensure that this file works in Node.js, for testing, and
 // in a WebWorker if loaded in such a context.
-if (( scope = (left = typeof exports !== 'undefined' && exports !== null ? exports : self) != null ? left : WorkerGlobalScope ) != null) {
+let left = typeof exports !== 'undefined' && exports !== null ? exports : self
+let scope = left != null ? left : WorkerGlobalScope
+if ( scope != null) {
     scope.OMNode = (scope.OM = OM);
 }
