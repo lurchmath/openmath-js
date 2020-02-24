@@ -9,93 +9,122 @@
         
         <link rel="shortcut icon" href="../img/favicon.ico">
         <title>Reference - OpenMath.js Documentation</title>
-        <link href="../css/bootstrap-custom.min.css" rel="stylesheet">
-        <link href="../css/font-awesome-4.5.0.css" rel="stylesheet">
+        <link href="../css/bootstrap.min.css" rel="stylesheet">
+        <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
-        <link rel="stylesheet" href="../css/highlight.css">
-        <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
-        <!--[if lt IE 9]>
-            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
-            <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
-        <![endif]-->
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css">
 
-        <script src="../js/jquery-1.10.2.min.js"></script>
-        <script src="../js/bootstrap-3.0.3.min.js"></script>
-        <script src="../js/highlight.pack.js"></script> 
+        <script src="../js/jquery-1.10.2.min.js" defer></script>
+        <script src="../js/bootstrap.min.js" defer></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+        <script>hljs.initHighlightingOnLoad();</script> 
     </head>
 
     <body>
+        <div class="navbar fixed-top navbar-expand-lg navbar-dark bg-primary">
+            <div class="container">
+                <a class="navbar-brand" href="..">OpenMath.js Documentation</a>
+                <!-- Expander button -->
+                <button type="button" class="navbar-toggler" data-toggle="collapse" data-target="#navbar-collapse">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
 
-        <div class="navbar navbar-default navbar-fixed-top" role="navigation">
-    <div class="container">
+                <!-- Expanded navigation -->
+                <div id="navbar-collapse" class="navbar-collapse collapse">
+                        <!-- Main navigation -->
+                        <ul class="nav navbar-nav">
+                            <li class="navitem">
+                                <a href=".." class="nav-link">Home</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../source-code/" class="nav-link">Source</a>
+                            </li>
+                            <li class="navitem">
+                                <a href="../work-done/" class="nav-link">Work</a>
+                            </li>
+                            <li class="navitem active">
+                                <a href="./" class="nav-link">Reference</a>
+                            </li>
+                        </ul>
 
-        <!-- Collapsed navigation -->
-        <div class="navbar-header">
-            <!-- Expander button -->
-            <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                <span class="sr-only">Toggle navigation</span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-                <span class="icon-bar"></span>
-            </button>
-            <a class="navbar-brand" href="..">OpenMath.js Documentation</a>
+                    <ul class="nav navbar-nav ml-auto">
+                        <li class="nav-item">
+                            <a href="#" class="nav-link" data-toggle="modal" data-target="#mkdocs_search_modal">
+                                <i class="fa fa-search"></i> Search
+                            </a>
+                        </li>
+                            <li class="nav-item">
+                                <a rel="prev" href="../work-done/" class="nav-link">
+                                    <i class="fa fa-arrow-left"></i> Previous
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a rel="next" class="nav-link disabled">
+                                    Next <i class="fa fa-arrow-right"></i>
+                                </a>
+                            </li>
+                    </ul>
+                </div>
+            </div>
         </div>
-
-        <!-- Expanded navigation -->
-        <div class="navbar-collapse collapse">
-                <!-- Main navigation -->
-                <ul class="nav navbar-nav">
-                    <li >
-                        <a href="..">Home</a>
-                    </li>
-                    <li >
-                        <a href="../source-code/">Source</a>
-                    </li>
-                    <li >
-                        <a href="../work-done/">Work</a>
-                    </li>
-                    <li class="active">
-                        <a href="./">Reference</a>
-                    </li>
-                </ul>
-
-            <ul class="nav navbar-nav navbar-right">
-                <li>
-                    <a href="#" data-toggle="modal" data-target="#mkdocs_search_modal">
-                        <i class="fa fa-search"></i> Search
-                    </a>
-                </li>
-                    <li >
-                        <a rel="next" href="../work-done/">
-                            <i class="fa fa-arrow-left"></i> Previous
-                        </a>
-                    </li>
-                    <li class="disabled">
-                        <a rel="prev" >
-                            Next <i class="fa fa-arrow-right"></i>
-                        </a>
-                    </li>
-            </ul>
-        </div>
-    </div>
-</div>
 
         <div class="container">
-                <div class="col-md-3"><div class="bs-sidebar hidden-print affix well" role="complementary">
-    <ul class="nav bs-sidenav">
-        <li class="main active"><a href="#api-reference">API Reference</a></li>
-            <li><a href="#getting-started">Getting started</a></li>
-            <li><a href="#creating-openmath-objects">Creating OpenMath objects</a></li>
-            <li><a href="#writingsaving-openmath-objects">Writing/saving OpenMath objects</a></li>
-            <li><a href="#properties-of-openmath-objects">Properties of OpenMath Objects</a></li>
-            <li><a href="#tree-related-functions">Tree-Related Functions</a></li>
-            <li><a href="#searching-openmath-trees">Searching OpenMath Trees</a></li>
-            <li><a href="#free-and-bound-variables">Free and Bound Variables</a></li>
-            <li><a href="#miscellany">Miscellany</a></li>
-            <li><a href="#more-examples">More Examples</a></li>
-    </ul>
+            <div class="row">
+                    <div class="col-md-3"><div class="navbar-light navbar-expand-md bs-sidebar hidden-print affix" role="complementary">
+    <div class="navbar-header">
+        <button type="button" class="navbar-toggler collapsed" data-toggle="collapse" data-target="#toc-collapse" title="Table of Contents">
+            <span class="fa fa-angle-down"></span>
+        </button>
+    </div>
+
+    
+    <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
+        <ul class="nav flex-column">
+            
+            <li class="nav-item" data-level="1"><a href="#api-reference" class="nav-link">API Reference</a>
+              <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#getting-started" class="nav-link">Getting started</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#creating-openmath-objects" class="nav-link">Creating OpenMath objects</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#writingsaving-openmath-objects" class="nav-link">Writing/saving OpenMath objects</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#properties-of-openmath-objects" class="nav-link">Properties of OpenMath Objects</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#tree-related-functions" class="nav-link">Tree-Related Functions</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#searching-openmath-trees" class="nav-link">Searching OpenMath Trees</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#free-and-bound-variables" class="nav-link">Free and Bound Variables</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#miscellany" class="nav-link">Miscellany</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#more-examples" class="nav-link">More Examples</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+              </ul>
+            </li>
+        </ul>
+    </div>
 </div></div>
-                <div class="col-md-9" role="main">
+                    <div class="col-md-9" role="main">
 
 <h1 id="api-reference">API Reference</h1>
 <h2 id="getting-started">Getting started</h2>
@@ -170,11 +199,9 @@ OM.application( plus, arg1, arg2 ).toXML(); // gives XML encoding for x+5
 
 <p>Because the above method can easily become annoyingly lengthy, we also
 provide a shorthand for writing OpenMath expressions as strings and having
-them parsed in a convenient way.  Full details are covered in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#simple-encoding-and-decoding">the source
-code documentation
-here</a>.
-It is called "simple encoding and decoding," and you can create new <code>OM</code>
-instances from that encoding with the following function.</p>
+them parsed in a convenient way.  Full details are covered in <a href="../simple-encoding/">a separate
+page about simple encoding and decoding</a>.
+Here is a brief summary.</p>
 <ul>
 <li><code>OM.simpleDecode(string)</code> creates a new <code>OM</code> instance decoded from the
    given string.  If your input is invalid (not a string, or a string not
@@ -183,7 +210,7 @@ instances from that encoding with the following function.</p>
 </ul>
 <p>Example usage:</p>
 <div class="runnable-example">
-OM.simpleDecode( 'plus.arith1(x,5)' ).toXML();
+OM.simpleDecode( 'arith1.plus(x,5)' ).toXML();
 </div>
 
 <p>Each of the functions in this section have nicknames.  For each factory
@@ -199,7 +226,7 @@ OM.app( OM.sym( 'plus', 'arith1' ), OM.var( 'x' ), OM.int( 5 ) ).toXML();
 <p>Finally, the <code>simpleDecode</code> function also has the nickname <code>simple</code>, so the
 most compact form is the following.</p>
 <div class="runnable-example">
-OM.simple( 'plus.arith1(x,5)' ).toXML();
+OM.simple( 'arith1.plus(x,5)' ).toXML();
 </div>
 
 <p>The <code>OM</code> objects are just wrappers around JSON tree structures that provide
@@ -208,7 +235,7 @@ the tree structur itself with <code>myInstance.tree</code>.  It is not quite JSO
 because it has circular references, as children nodes point to their parent
 nodes, but it is close to JSON.</p>
 <p>The specification for how OpenMath expressions are stored as JSON trees is
-given <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module">at the top of the source code documentation</a>, should you need it.  The following methods are
+given in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.js">comments at the top of the source code</a>, should you need it.  The following methods are
 available for working with such structures, but these are rarely used by the
 client, and are mostly for internal purposes.</p>
 <ul>
@@ -241,7 +268,7 @@ client, and are mostly for internal purposes.</p>
    just one or two letters, one of i, f, st, ba, sy, v, a, bi, e, which mean
    integer, float, string, bytearray, symbol, variable, application,
    binding, and error, respectively.  These come directly from the JSON
-   encoding documented <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module">here</a>.</li>
+   encoding documented <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.js">in the source</a>.</li>
 <li><code>instance.value</code> yields the value of those atomic types that have one, as
    an atomic JavaScript datum.  Integers and floats yield a JavaScript
    number, strings yield a JavaScript string, and bytearrays yield a
@@ -329,10 +356,22 @@ within parent/ancestor trees, and the following functions use that
 convention.  You can read about the indexing/addressing convention <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#parent-child-relationships">in the
 source code documentation here</a>.</p>
 <ul>
-<li><code>instance.findInParent()</code> returns a single index of the form cn/vn/b/s,
-    or a JSON attribute key, or undefined if the instance has no parent, as
-    per the indexing scheme linked to above.  It returns undefined if there
-    is no such child.</li>
+<li><code>instance.findInParent()</code> returns a single string indicating the index of
+    the node in its parent.  The return value will be one of five types:<ul>
+<li>a string containing "c" followed by a number, as in 'c7' - this means
+   that the node is in it's parent's <code>children</code> array, and is at index 7</li>
+<li>a string containing "v" followed by a number, as in 'v0' - this is the
+   same as the previous, but for the parent's <code>variables</code> array</li>
+<li>the string "b" - this means that the node is the body and its parent is
+   a binding</li>
+<li>the string "s" - this means that the node is a symbol for its parent,
+   which is either an error or a binding</li>
+<li>a lengthier string beginning with "{" - this is the JSON encoded version
+   of the attribute key for which the node is the corresponding value</li>
+<li>undefined if none of the above apply (e.g., no parent, or invalid tree
+   structure)</li>
+</ul>
+</li>
 <li><code>instance.findChild(indexString)</code> is the inverse of the previous, in that
    it takes as input a string that the previous might give as output, and
    finds the corresponding child tree by that index.</li>
@@ -380,7 +419,7 @@ console.log( descendant.address( deepTree.children[1] ) ); // c1,c2
    considers indirect descendants as well.  Note that original subtrees are
    returned, not copies, so modifying them will change the original
    instance.</li>
-<li><code>instance.hasDescendantsSatisfying(P)</code> returns true or false, equal to
+<li><code>instance.hasDescendantSatisfying(P)</code> returns true or false, equal to
    calling <code>instance.descendantsSatisfying(P).length &gt; 0</code>, except this is
    faster because it can stop searching once it has found one.</li>
 </ul>
@@ -447,10 +486,10 @@ console.log( OM.simple( 'e' ).evaluate() ); // 2.71828... w/rounding message
 </div>
 
 <h2 id="more-examples">More Examples</h2>
-<p>In addition to the brief examples shown in this file, the test suite in the
-source code repository is (naturally) a large set of examples of how the
-module works, and they become useful <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath-spec.litcoffee#factory-functions">at about this point in the
-file</a>.</p>
+<p>In addition to the brief examples shown in this file, <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.test.js">the test suite in the
+source code repository</a>
+is (naturally) a large set of examples of how the module works, and they become
+useful approximately where "factory functions" are tested.</p>
 <script src="https://embed.runkit.com"></script>
 
 <script>
@@ -465,32 +504,35 @@ for ( var i = 0 ; i < elements.length ; i++ ) {
     } );
 }
 </script></div>
+            </div>
         </div>
 
         <footer class="col-md-12">
             <hr>
-            <p>Documentation built with <a href="http://www.mkdocs.org/">MkDocs</a>.</p>
+            <p>Documentation built with <a href="https://www.mkdocs.org/">MkDocs</a>.</p>
         </footer>
-        <script>var base_url = '..';</script>
-        <script src="../js/base.js"></script>
-        <script src="../search/require.js"></script>
-        <script src="../search/search.js"></script>
+        <script>
+            var base_url = "..",
+                shortcuts = {"help": 191, "next": 78, "previous": 80, "search": 83};
+        </script>
+        <script src="../js/base.js" defer></script>
+        <script src="../search/main.js" defer></script>
 
-        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="Search Modal" aria-hidden="true">
-    <div class="modal-dialog">
+        <div class="modal" id="mkdocs_search_modal" tabindex="-1" role="dialog" aria-labelledby="searchModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="searchModalLabel">Search</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Search</h4>
             </div>
             <div class="modal-body">
                 <p>
                     From here you can search these documents. Enter
                     your search terms below.
                 </p>
-                <form role="form">
+                <form>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query">
+                        <input type="text" class="form-control" placeholder="Search..." id="mkdocs-search-query" title="Type search term here">
                     </div>
                 </form>
                 <div id="mkdocs-search-results"></div>
@@ -499,12 +541,12 @@ for ( var i = 0 ; i < elements.length ; i++ ) {
             </div>
         </div>
     </div>
-</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="Keyboard Shortcuts Modal" aria-hidden="true">
+</div><div class="modal" id="mkdocs_keyboard_modal" tabindex="-1" role="dialog" aria-labelledby="keyboardModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
+                <h4 class="modal-title" id="keyboardModalLabel">Keyboard Shortcuts</h4>
                 <button type="button" class="close" data-dismiss="modal"><span aria-hidden="true">&times;</span><span class="sr-only">Close</span></button>
-                <h4 class="modal-title" id="exampleModalLabel">Keyboard Shortcuts</h4>
             </div>
             <div class="modal-body">
               <table class="table">
@@ -516,19 +558,19 @@ for ( var i = 0 ; i < elements.length ; i++ ) {
                 </thead>
                 <tbody>
                   <tr>
-                    <td><kbd>?</kbd></td>
+                    <td class="help shortcut"><kbd>?</kbd></td>
                     <td>Open this help</td>
                   </tr>
                   <tr>
-                    <td><kbd>&larr;</kbd></td>
-                    <td>Previous page</td>
-                  </tr>
-                  <tr>
-                    <td><kbd>&rarr;</kbd></td>
+                    <td class="next shortcut"><kbd>n</kbd></td>
                     <td>Next page</td>
                   </tr>
                   <tr>
-                    <td><kbd>s</kbd></td>
+                    <td class="prev shortcut"><kbd>p</kbd></td>
+                    <td>Previous page</td>
+                  </tr>
+                  <tr>
+                    <td class="search shortcut"><kbd>s</kbd></td>
                     <td>Search</td>
                   </tr>
                 </tbody>
@@ -539,7 +581,6 @@ for ( var i = 0 ; i < elements.length ; i++ ) {
         </div>
     </div>
 </div>
-
 
     </body>
 </html>

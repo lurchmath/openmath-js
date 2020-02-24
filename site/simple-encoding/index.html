@@ -8,7 +8,7 @@
         
         
         <link rel="shortcut icon" href="../img/favicon.ico">
-        <title>Work - OpenMath.js Documentation</title>
+        <title>Simple encoding and decoding - OpenMath.js Documentation</title>
         <link href="../css/bootstrap.min.css" rel="stylesheet">
         <link href="../css/font-awesome.min.css" rel="stylesheet">
         <link href="../css/base.css" rel="stylesheet">
@@ -39,8 +39,8 @@
                             <li class="navitem">
                                 <a href="../source-code/" class="nav-link">Source</a>
                             </li>
-                            <li class="navitem active">
-                                <a href="./" class="nav-link">Work</a>
+                            <li class="navitem">
+                                <a href="../work-done/" class="nav-link">Work</a>
                             </li>
                             <li class="navitem">
                                 <a href="../api-reference/" class="nav-link">Reference</a>
@@ -53,16 +53,6 @@
                                 <i class="fa fa-search"></i> Search
                             </a>
                         </li>
-                            <li class="nav-item">
-                                <a rel="prev" href="../source-code/" class="nav-link">
-                                    <i class="fa fa-arrow-left"></i> Previous
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a rel="next" href="../api-reference/" class="nav-link">
-                                    Next <i class="fa fa-arrow-right"></i>
-                                </a>
-                            </li>
                     </ul>
                 </div>
             </div>
@@ -81,8 +71,16 @@
     <div id="toc-collapse" class="navbar-collapse collapse card bg-secondary">
         <ul class="nav flex-column">
             
-            <li class="nav-item" data-level="1"><a href="#work-done" class="nav-link">Work Done</a>
+            <li class="nav-item" data-level="1"><a href="#simple-encoding-and-decoding" class="nav-link">Simple encoding and decoding</a>
               <ul class="nav flex-column">
+            <li class="nav-item" data-level="2"><a href="#simple-encoding" class="nav-link">Simple encoding</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
+            <li class="nav-item" data-level="2"><a href="#simple-decoding" class="nav-link">Simple decoding</a>
+              <ul class="nav flex-column">
+              </ul>
+            </li>
               </ul>
             </li>
         </ul>
@@ -90,43 +88,85 @@
 </div></div>
                     <div class="col-md-9" role="main">
 
-<h1 id="work-done">Work Done</h1>
-<p>This repository implements a portion of <a href="http://www.openmath.org/standard/om20-2004-06-30/">the OpenMath 2.0
-standard</a> in JavaScript.
-(For details, you may want to refer to <a href="../api-reference/">the API
-Reference</a>.)</p>
-<p>In particular, the following pieces have been implemented:</p>
+<h1 id="simple-encoding-and-decoding">Simple encoding and decoding</h1>
+<p>The basic OpenMath API can be used to create OpenMath data structures of
+arbitrary complexity and type.  But most use cases can be handled with only
+a subset of that full complexity, and we provide the following tools for
+doing so.</p>
+<h2 id="simple-encoding">Simple encoding</h2>
+<p><code>OMNode.simpleDecode()</code> takes a string as input (like <code>OMNode.decode()</code>
+does), but this string is in a much simpler form.  Here are the formats it
+supports.</p>
 <ul>
-<li>All types of OpenMath objects except for <code>OMFOREIGN</code></li>
-<li>Serialization to/deserialization from a simple JSON encoding</li>
-<li>Serialization to the standard XML encoding</li>
+<li><code>anyIdentifier</code> will be treated as a variable.  Examples:<ul>
+<li><code>x</code></li>
+<li><code>thing_7</code></li>
 </ul>
-<p>The following pieces have not been implemented:</p>
+</li>
+<li><code>ident1.ident2</code> will be treated as a symbol (CD and name, respectively).
+    Examples:<ul>
+<li><code>arith1.plus</code></li>
+<li><code>transc1.arcsin</code></li>
+</ul>
+</li>
+<li>any integer will be treated as an integer.  Examples:<ul>
+<li>-6</li>
+<li>57328074078459027340 (value will be a string, due to size)</li>
+</ul>
+</li>
+<li>any float will be treated as a float.  Examples:<ul>
+<li>582.53280</li>
+<li>-0.00001</li>
+</ul>
+</li>
+<li>a string literal enclosed in quotation marks (<code>"</code>) will be treated as a
+    string, but with no support for escape codes, other than <code>\"</code>.  Examples:<ul>
+<li><code>"this is a string"</code></li>
+<li><code>""</code></li>
+</ul>
+</li>
+<li>a string literal enclosed in single quotes (<code>'</code>) behaves the same way,
+    escaping only <code>\'</code><ul>
+<li><code>'this is also a string, ain\'t it?'</code></li>
+<li><code>'""'</code></li>
+</ul>
+</li>
+<li><code>F(A1,...,An)</code>, where <code>F</code> is any valid form and each <code>Ai</code> is as well,
+    is interpreted as the application of <code>F</code> to the <code>Ai</code> in the order given.
+    Here <code>n</code> may be zero.  Examples:<ul>
+<li><code>f(x)</code></li>
+<li><code>transc1.arcsin(arith1.divide(1,2))</code></li>
+</ul>
+</li>
+<li><code>F[A1,...,An]</code> behaves the same as the previous case, except that the
+    <code>Ai</code> entries before <code>An</code> must all be variables, and they will be bound;
+    i.e., this yields an OpenMath binding object, not an application object.
+    Examples:<ul>
+<li><code>logic.forall[x,P(x)]</code></li>
+<li><code>foo.lambda[x,f(x,7,"bar")]</code></li>
+</ul>
+</li>
+</ul>
+<p>This syntax does not allow for the expression of OpenMath error objects,
+attributions, symbol URIs, byte arrays, or very large integers.</p>
+<h2 id="simple-decoding">Simple decoding</h2>
+<p>The inverse to the above function is a simple encoding function.  It can
+operate on only a subset of the full complexity of OMNode trees, and thus in
+some cases it gives results that are not representative of the input.  Here
+are the details:</p>
 <ul>
-<li>Deserialization from the standard XML encoding</li>
-<li>The standard binary encoding</li>
-<li><code>OMFOREIGN</code> objects</li>
-<li>Only a subset of the range of Unicode characters valid in OpenMath
-   identifiers is in use in this code; see the <code>identRE</code> regular expression
-   used in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#class-static-methods">this function</a></li>
+<li>integers, floats, and strings will all be correctly encoded</li>
+<li>variables without dots in their names will be correctly encoded; those
+   with dots in their names conflict with the naming of symbols in the
+   simple encoding, but will be encoded as their names</li>
+<li>symbols will be correctly encoded with the exception that any URI will be
+   dropped, and the same issue with dots applies to symbol and CD names</li>
+<li>byte arrays and errors have no simple encoding, and will thus all be
+   converted to a string containing the words "byte array" or "error,"
+   respectively</li>
+<li>all attributions are dropped</li>
 </ul>
-<p>Futhermore, the following features have been added, above and beyond the
-requirements of the standard:</p>
-<ul>
-<li>Deep copying OpenMath objects and comparing them for structural equality</li>
-<li>Serialization to/deserialization from a simple prefix notation string
-   encoding useful for convenience (e.g., <code>f(x)</code> means what you'd think)</li>
-<li>Routines for indexing and addressing child or descendant notes within an
-   OpenMath tree structure</li>
-<li>Routines for editing an OpenMath tree structure by inserting, removing,
-   or replacing subtrees with others</li>
-<li>Routines for finding free/bound variables, and testing whether an
-   expression is free to replace a variable, and performing said replacement</li>
-<li>Filtering children/descendants by a given predicate</li>
-<li>Evaluating simple mathematical expressions numerically</li>
-</ul>
-<p>To see how to use these features, check out <a href="../api-reference/">the API
-Reference</a>.</p></div>
+<p>Example use:  <code>const sum = OM.simple( 'arith1.plus( 3, 4 )' )</code></p></div>
             </div>
         </div>
 
