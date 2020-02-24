@@ -1,7 +1,3 @@
-/*
- * Other to-dos:
- * Change comments to JSDoc
- */
 
 // # OpenMath module
 //
