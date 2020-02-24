@@ -86,11 +86,9 @@ OM.application( plus, arg1, arg2 ).toXML(); // gives XML encoding for x+5
 
 Because the above method can easily become annoyingly lengthy, we also
 provide a shorthand for writing OpenMath expressions as strings and having
-them parsed in a convenient way.  Full details are covered in [the source
-code documentation
-here](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#simple-encoding-and-decoding).
-It is called "simple encoding and decoding," and you can create new `OM`
-instances from that encoding with the following function.
+them parsed in a convenient way.  Full details are covered in [a separate
+page about simple encoding and decoding](simple-encoding.md).
+Here is a brief summary.
 
  * `OM.simpleDecode(string)` creates a new `OM` instance decoded from the
    given string.  If your input is invalid (not a string, or a string not
