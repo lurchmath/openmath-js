@@ -126,7 +126,7 @@ because it has circular references, as children nodes point to their parent
 nodes, but it is close to JSON.
 
 The specification for how OpenMath expressions are stored as JSON trees is
-given [at the top of the source code documentation](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module), should you need it.  The following methods are
+given in [comments at the top of the source code](https://github.com/lurchmath/openmath-js/blob/master/openmath.js), should you need it.  The following methods are
 available for working with such structures, but these are rarely used by the
 client, and are mostly for internal purposes.
 
@@ -159,7 +159,7 @@ client, and are mostly for internal purposes.
    just one or two letters, one of i, f, st, ba, sy, v, a, bi, e, which mean
    integer, float, string, bytearray, symbol, variable, application,
    binding, and error, respectively.  These come directly from the JSON
-   encoding documented [here](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#openmath-module).
+   encoding documented [in the source](https://github.com/lurchmath/openmath-js/blob/master/openmath.js).
  * `instance.value` yields the value of those atomic types that have one, as
    an atomic JavaScript datum.  Integers and floats yield a JavaScript
    number, strings yield a JavaScript string, and bytearrays yield a
@@ -378,10 +378,10 @@ console.log( OM.simple( 'e' ).evaluate() ); // 2.71828... w/rounding message
 
 ## More Examples
 
-In addition to the brief examples shown in this file, the test suite in the
-source code repository is (naturally) a large set of examples of how the
-module works, and they become useful [at about this point in the
-file](https://github.com/lurchmath/openmath-js/blob/master/openmath-spec.litcoffee#factory-functions).
+In addition to the brief examples shown in this file, [the test suite in the
+source code repository](https://github.com/lurchmath/openmath-js/blob/master/openmath.test.js)
+is (naturally) a large set of examples of how the module works, and they become
+useful approximately where "factory functions" are tested.
 
 <script src="https://embed.runkit.com"></script>
 <script>
