@@ -98,7 +98,7 @@ Here is a brief summary.
 Example usage:
 
 <div class="runnable-example">
-OM.simpleDecode( 'plus.arith1(x,5)' ).toXML();
+OM.simpleDecode( 'arith1.plus(x,5)' ).toXML();
 </div>
 
 Each of the functions in this section have nicknames.  For each factory
@@ -116,7 +116,7 @@ Finally, the `simpleDecode` function also has the nickname `simple`, so the
 most compact form is the following.
 
 <div class="runnable-example">
-OM.simple( 'plus.arith1(x,5)' ).toXML();
+OM.simple( 'arith1.plus(x,5)' ).toXML();
 </div>
 
 The `OM` objects are just wrappers around JSON tree structures that provide
