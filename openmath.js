@@ -3,7 +3,6 @@
  * DS104: Avoid inline assignments
  * DS201: Simplify complex destructure assignments
  * DS202: Simplify dynamic range loops
- * DS203: Remove `|| {}` from converted for-own loops
  * DS205: Consider reworking code to avoid use of IIFEs
  * DS206: Consider reworking classes to avoid initClass
  * DS207: Consider shorter variations of null checks
@@ -351,7 +350,7 @@ const OM = (OMNode = (function() {
                     }
                 }
                 const object = node.a != null ? node.a : { };
-                for (let k of Object.keys(object || {})) { // attribute values, if any
+                for (let k of Object.keys(object)) { // attribute values, if any
                     v = object[k];
                     v.p = node;
                     setParents(v);
@@ -474,7 +473,7 @@ const OM = (OMNode = (function() {
                 // attributes).
                 if (!(a instanceof Object)) { return false; }
                 if (!(b instanceof Object)) { return false; }
-                for (key of Object.keys(a || {})) {
+                for (key of Object.keys(a)) {
                     value = a[key];
                     if ((key === 'p') || (!attributes && (key === 'a'))) {
                         continue;
@@ -485,7 +484,7 @@ const OM = (OMNode = (function() {
                     }
                     if (!recur(value, b[key])) { return false; }
                 }
-                for (key of Object.keys(b || {})) {
+                for (key of Object.keys(b)) {
                     value = b[key];
                     if ((key === 'p') || (!attributes && (key === 'a'))) {
                         continue;
@@ -550,7 +549,7 @@ const OM = (OMNode = (function() {
 
                 // Then no matter what we created, we copy the attributes over as well.
                 const object = tree.a != null ? tree.a : { };
-                for (let key of Object.keys(object || {})) {
+                for (let key of Object.keys(object)) {
                     const value = object[key];
                     ( result.a != null ? result.a : (result.a = { }) )[key] = recur(value);
                 }
@@ -944,7 +943,7 @@ const OM = (OMNode = (function() {
             if (this.sameObjectAs(this.parent.symbol)) { return 's'; }
             if (this.sameObjectAs(this.parent.body)) { return 'b'; }
             const object = this.parent.tree.a != null ? this.parent.tree.a : { };
-            for (let key of Object.keys(object || {})) {
+            for (let key of Object.keys(object)) {
                 const value = object[key];
                 if (this.tree === value) { return key; }
             }
@@ -1078,7 +1077,7 @@ const OM = (OMNode = (function() {
             const nameRE = RegExp(`\"n\":\"${keySymbol.name}\"`);
             const cdRE = RegExp(`\"cd\":\"${keySymbol.cd}\"`);
             const object = this.tree.a != null ? this.tree.a : { };
-            for (let key of Object.keys(object || {})) {
+            for (let key of Object.keys(object)) {
                 const value = object[key];
                 if (nameRE.test( key ) && cdRE.test( key )) {
                     return new OMNode(value);
@@ -1098,7 +1097,7 @@ const OM = (OMNode = (function() {
             const nameRE = RegExp(`\"n\":\"${keySymbol.name}\"`);
             const cdRE = RegExp(`\"cd\":\"${keySymbol.cd}\"`);
             const object = this.tree.a != null ? this.tree.a : { };
-            for (let key of Object.keys(object || {})) {
+            for (let key of Object.keys(object)) {
                 const value = object[key];
                 if (nameRE.test( key ) && cdRE.test( key )) {
                     ( new OMNode(value) ).remove();
