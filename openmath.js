@@ -320,17 +320,15 @@ export class OMNode {
 
     // ### Constructor
     //
-    // The above factory function uses the following constructor.  The constructor
-    // also defines several properties for the object, by installing getters for
-    // the common attributes type, value, name, cd, uri, symbol, body, children,
-    // and variables.  These all return undefined if they do not apply to the
-    // current structure, except children and variables, which return empty arrays
-    // in that case.
+    // The above factory function uses the following constructor.
     constructor( tree ) {
         this.tree = tree;
     }
 
-    // Define getters for convenience:
+    // Define getters for the common attributes type, value, name, cd, uri, symbol, body,
+    // children, and variables.  These all return undefined if they do not apply to the
+    // current structure, except children and variables, which return empty arrays
+    // in that case.
     get parent () {
         if (this.tree.p) { return new OMNode(this.tree.p); } else { return undefined; }
     }
