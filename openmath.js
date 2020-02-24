@@ -1,6 +1,5 @@
 /*
  * decaffeinate suggestions:
- * DS103: Rewrite code to no longer use __guard__
  * DS104: Avoid inline assignments
  * DS201: Simplify complex destructure assignments
  * DS202: Simplify dynamic range loops
@@ -799,7 +798,7 @@ const OM = (OMNode = (function() {
                                 break;
                             case 'openParen':
                                 stack[0].head = 'application';
-                                if (__guard__(tokens != null ? tokens[0] : undefined, x => x.type) === 'closeParen') {
+                                if ( tokens && tokens[0] && tokens[0].type === 'closeParen' ) {
                                     tokens.shift();
                                     stack.unshift({
                                         node : OMNode.application(
@@ -991,7 +990,9 @@ const OM = (OMNode = (function() {
         index( address ) {
             if (!(address instanceof Array)) { return undefined; }
             if (address.length === 0) { return this; }
-            return __guard__(this.findChild( address[0] ), x => x.index(address.slice(1)));
+            const child = this.findChild( address[0] )
+            return typeof child === 'undefined' || child === null ? undefined :
+                child.index(address.slice(1));
         }
 
         // The following function breaks the relationship of the object with its
@@ -1534,8 +1535,4 @@ OM.prototype.evaluate = function() {
 // in a WebWorker if loaded in such a context.
 if (( scope = (left = typeof exports !== 'undefined' && exports !== null ? exports : self) != null ? left : WorkerGlobalScope ) != null) {
     scope.OMNode = (scope.OM = OM);
-}
-
-function __guard__(value, transform) {
-  return (typeof value !== 'undefined' && value !== null) ? transform(value) : undefined;
 }
