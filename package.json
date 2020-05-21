@@ -16,9 +16,7 @@
         "transformIgnorePatterns": []
     },
     "type": "module",
-    "dependencies": {
-        "coffee-script": "1.8.0"
-    },
+    "dependencies": {},
     "repository": {
         "type": "git",
         "url": "git://github.com/lurchmath/openmath-js.git"

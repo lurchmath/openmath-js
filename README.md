@@ -24,7 +24,7 @@ next.
 
 ## Repository contents
 
- * [Source code, in Literate CoffeeScript](openmath.litcoffee)
+ * [Source code, in JavaScript](openmath.js)
  * [Compiled and minified JavaScript from a CDN](https://cdn.jsdelivr.net/npm/openmath-js@1/openmath.js) that you can import directly into your projects from that URL
 
 ## Documentation

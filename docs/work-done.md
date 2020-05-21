@@ -19,7 +19,7 @@ The following pieces have not been implemented:
  * `OMFOREIGN` objects
  * Only a subset of the range of Unicode characters valid in OpenMath
    identifiers is in use in this code; see the `identRE` regular expression
-   used in [this function](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#class-static-methods)
+   used in [the source](https://github.com/lurchmath/openmath-js/blob/master/openmath.js)
 
 Futhermore, the following features have been added, above and beyond the
 requirements of the standard:

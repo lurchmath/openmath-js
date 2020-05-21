@@ -129,7 +129,7 @@
 <h1 id="api-reference">API Reference</h1>
 <h2 id="getting-started">Getting started</h2>
 <h3 id="in-the-browser">In the browser</h3>
-<p>Import the minified JavaScript, which you can <a href="https://raw.githubusercontent.com/lurchmath/openmath-js/master/openmath.js">download from our repository
+<p>Import the JavaScript, which you can <a href="https://raw.githubusercontent.com/lurchmath/openmath-js/master/openmath.js">download from our repository
 directly</a>
 or import from a CDN with the following one-liner.</p>
 <pre><code class="html">&lt;script src='https://cdn.jsdelivr.net/npm/openmath-js@1/openmath.js'&gt;&lt;/script&gt;
@@ -149,8 +149,8 @@ function as-is.</p>
 <h2 id="creating-openmath-objects">Creating OpenMath objects</h2>
 <p>The prototype for OpenMath data structures (that is, expression trees) is
 named <code>OMNode</code> in the global namespace (the browser <code>window</code>) and is also
-named <code>OM</code> for convenience; they are the same object.  It is defined as a
-CoffeeScript class, which translates to a JavaScript prototype.</p>
+named <code>OM</code> for convenience; they are the same object.  It is defined as an
+ES6 class.</p>
 <p>Rather than use its constructor, there are a number of factory functions
 that create <code>OM</code> instances, as follows.</p>
 <ul>
@@ -353,8 +353,9 @@ console.log( C == D ); // false
 <h2 id="searching-openmath-trees">Searching OpenMath Trees</h2>
 <p>We have devised a way for indexing and addressing children and descendants
 within parent/ancestor trees, and the following functions use that
-convention.  You can read about the indexing/addressing convention <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#parent-child-relationships">in the
-source code documentation here</a>.</p>
+convention.  You can read about the indexing/addressing convention in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.js">the
+source code documentation</a>,
+the section entitled "Parent-Child Relationships."</p>
 <ul>
 <li><code>instance.findInParent()</code> returns a single string indicating the index of
     the node in its parent.  The return value will be one of five types:<ul>

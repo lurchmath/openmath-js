@@ -5,7 +5,7 @@
 
 ### In the browser
 
-Import the minified JavaScript, which you can [download from our repository
+Import the JavaScript, which you can [download from our repository
 directly](https://raw.githubusercontent.com/lurchmath/openmath-js/master/openmath.js)
 or import from a CDN with the following one-liner.
 
@@ -34,8 +34,8 @@ function as-is.
 
 The prototype for OpenMath data structures (that is, expression trees) is
 named `OMNode` in the global namespace (the browser `window`) and is also
-named `OM` for convenience; they are the same object.  It is defined as a
-CoffeeScript class, which translates to a JavaScript prototype.
+named `OM` for convenience; they are the same object.  It is defined as an
+ES6 class.
 
 Rather than use its constructor, there are a number of factory functions
 that create `OM` instances, as follows.
@@ -251,8 +251,9 @@ You can also modify tree structures as follows.
 
 We have devised a way for indexing and addressing children and descendants
 within parent/ancestor trees, and the following functions use that
-convention.  You can read about the indexing/addressing convention [in the
-source code documentation here](https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#parent-child-relationships).
+convention.  You can read about the indexing/addressing convention in [the
+source code documentation](https://github.com/lurchmath/openmath-js/blob/master/openmath.js),
+the section entitled "Parent-Child Relationships."
 
  * `instance.findInParent()` returns a single string indicating the index of
     the node in its parent.  The return value will be one of five types:
