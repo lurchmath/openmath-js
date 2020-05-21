@@ -22,6 +22,16 @@ Then see the [API Reference
 page](https://lurchmath.github.io/openmath-js/site/api-reference) for what to do
 next.
 
+## To develop:
+
+Edit the main source file `openmath.js` and its tests `openmath.test.js`.
+
+Run tests with `npm run test`.
+
+Update docs in the `docs/` subfolder.
+
+Build them into the `site/` folder with `npm run docs`.
+
 ## Repository contents
 
  * [Source code, in JavaScript](openmath.js)

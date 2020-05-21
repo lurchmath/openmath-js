@@ -9,17 +9,20 @@ Reference](api-reference.md).)
 In particular, the following pieces have been implemented:
 
  * All types of OpenMath objects except for `OMFOREIGN`
- * Serialization to/deserialization from a simple JSON encoding
- * Serialization to the standard XML encoding
+ * Serialization to/deserialization from a simple JSON encoding (not the
+   official OpenMath JSON encoding, which was developed after this work)
+ * Serialization to the standard XML encoding (but not deserialization)
 
 The following pieces have not been implemented:
 
  * Deserialization from the standard XML encoding
  * The standard binary encoding
+ * The new standard JSON encoding
  * `OMFOREIGN` objects
  * Only a subset of the range of Unicode characters valid in OpenMath
    identifiers is in use in this code; see the `identRE` regular expression
    used in [the source](https://github.com/lurchmath/openmath-js/blob/master/openmath.js)
+ * Other issues on [our GitHub issue tracker](https://github.com/lurchmath/openmath-js/issues)
 
 Futhermore, the following features have been added, above and beyond the
 requirements of the standard:
@@ -27,7 +30,7 @@ requirements of the standard:
  * Deep copying OpenMath objects and comparing them for structural equality
  * Serialization to/deserialization from a simple prefix notation string
    encoding useful for convenience (e.g., `f(x)` means what you'd think)
- * Routines for indexing and addressing child or descendant notes within an
+ * Routines for indexing and addressing child or descendant nodes within an
    OpenMath tree structure
  * Routines for editing an OpenMath tree structure by inserting, removing,
    or replacing subtrees with others
