@@ -24,14 +24,6 @@
         "url": "git://github.com/lurchmath/openmath-js.git"
     },
     "devDependencies": {
-        "@babel/core": "^7.1.5",
-        "@babel/preset-env": "^7.1.5",
-        "gulp": "^4.0.0",
-        "gulp-babel": "^8.0.0",
-        "gulp-coffee": "^3.0.3",
-        "gulp-shell": "^0.6.5",
-        "gulp-sourcemaps": "^2.6.4",
-        "gulp-uglify": "^3.0.1",
         "jest": "^25.1.0",
         "jest-esm-transformer": "^1.0.0"
     }
