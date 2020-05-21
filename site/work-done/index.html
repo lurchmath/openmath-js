@@ -98,17 +98,20 @@ Reference</a>.)</p>
 <p>In particular, the following pieces have been implemented:</p>
 <ul>
 <li>All types of OpenMath objects except for <code>OMFOREIGN</code></li>
-<li>Serialization to/deserialization from a simple JSON encoding</li>
-<li>Serialization to the standard XML encoding</li>
+<li>Serialization to/deserialization from a simple JSON encoding (not the
+   official OpenMath JSON encoding, which was developed after this work)</li>
+<li>Serialization to the standard XML encoding (but not deserialization)</li>
 </ul>
 <p>The following pieces have not been implemented:</p>
 <ul>
 <li>Deserialization from the standard XML encoding</li>
 <li>The standard binary encoding</li>
+<li>The new standard JSON encoding</li>
 <li><code>OMFOREIGN</code> objects</li>
 <li>Only a subset of the range of Unicode characters valid in OpenMath
    identifiers is in use in this code; see the <code>identRE</code> regular expression
-   used in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.litcoffee#class-static-methods">this function</a></li>
+   used in <a href="https://github.com/lurchmath/openmath-js/blob/master/openmath.js">the source</a></li>
+<li>Other issues on <a href="https://github.com/lurchmath/openmath-js/issues">our GitHub issue tracker</a></li>
 </ul>
 <p>Futhermore, the following features have been added, above and beyond the
 requirements of the standard:</p>
@@ -116,7 +119,7 @@ requirements of the standard:</p>
 <li>Deep copying OpenMath objects and comparing them for structural equality</li>
 <li>Serialization to/deserialization from a simple prefix notation string
    encoding useful for convenience (e.g., <code>f(x)</code> means what you'd think)</li>
-<li>Routines for indexing and addressing child or descendant notes within an
+<li>Routines for indexing and addressing child or descendant nodes within an
    OpenMath tree structure</li>
 <li>Routines for editing an OpenMath tree structure by inserting, removing,
    or replacing subtrees with others</li>
