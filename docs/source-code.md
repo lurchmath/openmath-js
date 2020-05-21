@@ -14,3 +14,6 @@ To import the source into your project, you can include it directly from a
 CDN at [this
 URL](https://cdn.jsdelivr.net/npm/openmath-js@1/openmath.js). There is a
 source map file in the same folder that your browser should detect.
+
+However, this method does not import the latest version, because we have
+upgraded this to an ES6 module, but npm does not yet support that standard.

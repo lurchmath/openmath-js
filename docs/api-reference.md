@@ -24,7 +24,7 @@ npm install openmath-js
 Then within any of your modules, import it as follows.
 
 ```js
-OM = require( "openmath-js" ).OM;
+OM = import( "openmath-js" ).OM;
 ```
 
 After that, any of the example code snippets in this documentation should
@@ -403,7 +403,7 @@ for ( var i = 0 ; i < elements.length ; i++ ) {
     var notebook = RunKit.createNotebook( {
         element: elements[i],
         source: source,
-        preamble: 'OM = require( "openmath-js" ).OM;'
+        preamble: 'OM = import( "openmath-js" ).OM;'
     } );
 }
 </script>
